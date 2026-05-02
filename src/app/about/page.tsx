@@ -1,0 +1,42 @@
+import type { Metadata } from "next";
+import AboutHero from "@/components/sections/AboutHero";
+import PhotoStack from "@/components/sections/PhotoStack";
+import ExperienceSection from "@/components/sections/ExperienceSection";
+import EducationSection from "@/components/sections/EducationSection";
+import FullSkillsSection from "@/components/sections/FullSkillsSection";
+import CertFlipCards from "@/components/ui/CertFlipCards";
+import ResearchSection from "@/components/sections/ResearchSection";
+import LeetCodeStats from "@/components/sections/LeetCodeStats";
+import GitHubStats from "@/components/sections/GitHubStats";
+
+export const metadata: Metadata = {
+  title: "About — AI Engineer & Software Developer",
+  description:
+    "Vaibhav Bansal is a top AI Engineer in the United States with 5+ years of experience. M.S. Data Science, SUNY Buffalo. Specializes in LangChain, RAG, LLMs, Python, React, and AWS. Previously at Wipro and DashClicks. Open to opportunities across the US.",
+  keywords: [
+    "Vaibhav Bansal AI engineer", "AI engineer United States", "software engineer background",
+    "LangChain engineer", "RAG developer", "LLM specialist", "machine learning engineer US",
+    "full stack AI developer", "hire AI engineer", "senior software engineer",
+  ],
+  openGraph: {
+    title: "About Vaibhav Bansal | AI Engineer — United States",
+    description: "5+ years building AI systems. M.S. Data Science. Ex-Wipro · Ex-DashClicks · Research Assistant. Available across the US.",
+    url: "https://www.vaibhavbansal.in/about",
+  },
+};
+
+export default function AboutPage() {
+  return (
+    <>
+      <AboutHero />
+      <PhotoStack />
+      <ExperienceSection />
+      <EducationSection />
+      <FullSkillsSection />
+      <CertFlipCards />
+      <ResearchSection />
+      <LeetCodeStats />
+      <GitHubStats />
+    </>
+  );
+}

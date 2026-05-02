@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"components/sections/SkillsPreview.tsx -> @/components/three/SkillSphere\":{\"id\":\"components/sections/SkillsPreview.tsx -> @/components/three/SkillSphere\",\"files\":[\"static/chunks/_app-pages-browser_src_components_three_SkillSphere_tsx.js\"]}}"
