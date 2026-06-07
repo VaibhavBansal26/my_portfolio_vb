@@ -124,7 +124,7 @@ function MagazineBook({ inView }: { inView: boolean }) {
           <text x="8" y="150" fill="rgba(232,168,56,.5)" fontSize="6"
             fontFamily="'Syne',sans-serif" fontWeight="700" textAnchor="middle"
             transform="rotate(-90,8,150)" letterSpacing="1">
-            RESEARCH · SUNY BUFFALO · 2023
+            RESEARCH · VIT UNIVERSITY · 2020
           </text>
 
           {/* Page stack illusion */}
@@ -145,7 +145,7 @@ function MagazineBook({ inView }: { inView: boolean }) {
           <rect x="18" y="10" width="196" height="20" fill="rgba(232,168,56,.1)" rx="2"/>
           <text x="116" y="23" fill="#e8a838" fontSize="6" fontFamily="'JetBrains Mono',monospace"
             letterSpacing="2.5" textAnchor="middle" fontWeight="700">
-            RESEARCH JOURNAL · 2023
+            SPRINGER · SN APPLIED SCIENCES
           </text>
 
           {/* Neural net graphic */}
@@ -169,22 +169,24 @@ function MagazineBook({ inView }: { inView: boolean }) {
           </g>
 
           {/* Title */}
-          <text x="116" y="128" fill="#f0ece4" fontSize="9" fontFamily="'Syne',sans-serif"
-            fontWeight="800" textAnchor="middle">Managing the</text>
-          <text x="116" y="140" fill="#f0ece4" fontSize="9" fontFamily="'Syne',sans-serif"
-            fontWeight="800" textAnchor="middle">Infodemic</text>
+          <text x="116" y="124" fill="#f0ece4" fontSize="7.5" fontFamily="'Syne',sans-serif"
+            fontWeight="800" textAnchor="middle">Obstacle Avoidance</text>
+          <text x="116" y="135" fill="#f0ece4" fontSize="7.5" fontFamily="'Syne',sans-serif"
+            fontWeight="800" textAnchor="middle">Using Stereo Vision</text>
+          <text x="116" y="146" fill="#f0ece4" fontSize="7.5" fontFamily="'Syne',sans-serif"
+            fontWeight="800" textAnchor="middle">&amp; Depth Maps</text>
 
           {/* Amber rule */}
           <line x1="40" y1="148" x2="192" y2="148" stroke="#e8a838" strokeWidth="1.2"/>
 
           {/* Author */}
-          <text x="116" y="160" fill="rgba(232,168,56,.6)" fontSize="6"
+          <text x="116" y="162" fill="rgba(232,168,56,.6)" fontSize="6"
             fontFamily="'JetBrains Mono',monospace" textAnchor="middle">
-            Vaibhav Bansal · SUNY Buffalo
+            Vaibhav Bansal · VIT University
           </text>
 
           {/* Tags */}
-          {["Deep Learning","NLP","COVID-19"].map((tag,i)=>{
+          {["Stereo Vision","Depth Maps","Assistive AI"].map((tag,i)=>{
             const w=52, x=28+i*(w+5);
             return (
               <g key={tag}>
@@ -200,7 +202,7 @@ function MagazineBook({ inView }: { inView: boolean }) {
           <rect x="85" y="188" width="62" height="16" rx="1"
             fill="rgba(232,168,56,.12)" stroke="rgba(232,168,56,.35)" strokeWidth="0.5"/>
           <text x="116" y="199" fill="#e8a838" fontSize="8" textAnchor="middle"
-            fontFamily="'Syne',sans-serif" fontWeight="800">2023</text>
+            fontFamily="'Syne',sans-serif" fontWeight="800">2020</text>
 
           {/* ORCID bottom bar */}
           <rect x="18" y="258" width="196" height="22" fill="rgba(232,168,56,.07)" rx="2"/>
@@ -322,10 +324,10 @@ export default function ResearchSection() {
                 <div>
                   <div className="font-mono" style={{ fontSize:8, color:"#555", letterSpacing:".2em",
                     textTransform:"uppercase", marginBottom:2 }}>
-                    Journal · Research Paper · 2023
+                    Journal · Research Paper · 2020
                   </div>
                   <div className="font-display font-extrabold" style={{ fontSize:13, color:"#e8a838" }}>
-                    SUNY Buffalo · medRxiv
+                    VIT University · Springer Nature
                   </div>
                 </div>
               </div>
@@ -368,7 +370,7 @@ export default function ResearchSection() {
                 </motion.div>
                 <div>
                   <div className="font-display font-bold" style={{ fontSize:13, color:"#f0ece4" }}>Vaibhav Bansal</div>
-                  <div className="font-mono" style={{ fontSize:8, color:"#555" }}>SUNY Buffalo · 2023</div>
+                  <div className="font-mono" style={{ fontSize:8, color:"#555" }}>VIT University · 2020</div>
                   <div className="font-mono" style={{ fontSize:8, color:"rgba(232,168,56,.5)", marginTop:2 }}>
                     ORCID: 0000-0002-5433-0385
                   </div>
@@ -376,8 +378,8 @@ export default function ResearchSection() {
               </div>
 
               <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:24 }}>
-                {[{label:"Year",val:"2023"},{label:"Institute",val:"SUNY UB"},
-                  {label:"Domain",val:"Deep Learning"},{label:"Topic",val:"COVID-19 AI"}].map(({label,val},i)=>(
+                {[{label:"Year",val:"2020"},{label:"Institute",val:"VIT Univ."},
+                  {label:"Domain",val:"Computer Vision"},{label:"Topic",val:"Assistive Tech"}].map(({label,val},i)=>(
                   <motion.div key={label}
                     initial={{ opacity:0, y:10 }} animate={inView?{opacity:1,y:0}:{}}
                     transition={{ delay:.7+i*.08 }}

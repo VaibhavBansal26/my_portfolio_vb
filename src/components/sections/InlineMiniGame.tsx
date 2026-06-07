@@ -29,7 +29,7 @@ export default function InlineMiniGame() {
   // Background particle canvas — always animating
   useEffect(()=>{
     const cv=bgRef.current; if(!cv)return;
-    const ctx=cv.getContext("2d"); if(!ctx)return;
+    const ctx=cv.getContext("2d") as CanvasRenderingContext2D; if(!ctx)return;
     // Use parent dimensions since canvas may not have layout yet
     const parent = cv.parentElement;
     let W=parent?.offsetWidth||720, H=parent?.offsetHeight||300;

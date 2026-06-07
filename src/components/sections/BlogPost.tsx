@@ -1,7 +1,6 @@
-"use client";
-import { motion } from "framer-motion";
-import Link from "next/link";
+// Server Component — MDXRemote from /rsc requires this
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import Link from "next/link";
 import type { BlogPost } from "@/lib/blog";
 import { FiArrowLeft, FiCalendar, FiClock } from "react-icons/fi";
 
@@ -19,7 +18,7 @@ const components = {
   code: (p: any) => {
     if (p.className) {
       return (
-        <pre style={{ background:"#080808", border:"1px solid var(--border)", padding:"1.25rem 1.5rem", overflowX:"auto", marginBottom:"1.5rem", position:"relative" }}>
+        <pre style={{ background:"#080808", border:"1px solid var(--border)", padding:"1.25rem 1.5rem", overflowX:"auto", marginBottom:"1.5rem" }}>
           <code {...p} style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"12px", lineHeight:1.7, color:"#e8a838" }}/>
         </pre>
       );
@@ -37,17 +36,13 @@ export default function BlogPost({ post }: { post: BlogPost }) {
         <Link href="/blog" style={{ display:"inline-flex", alignItems:"center", gap:6,
           fontFamily:"'JetBrains Mono',monospace", fontSize:10, color:"var(--text-muted)",
           textDecoration:"none", letterSpacing:".1em", textTransform:"uppercase",
-          transition:"color .2s" }}
-          onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.color="#e8a838"}
-          onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.color="var(--text-muted)"}>
+          transition:"color .2s" }}>
           <FiArrowLeft size={12}/> Back to Blog
         </Link>
       </div>
 
       {/* Header */}
-      <motion.div initial={{opacity:0,y:24}} animate={{opacity:1,y:0}}
-        transition={{duration:.5}} className="max-w-3xl mx-auto px-6 mb-12">
-        {/* Tags */}
+      <div className="max-w-3xl mx-auto px-6 mb-12">
         <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:16 }}>
           {post.tags.map(t => (
             <span key={t} style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:8,
@@ -82,19 +77,18 @@ export default function BlogPost({ post }: { post: BlogPost }) {
             Vaibhav Bansal
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Content */}
-      <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.2,duration:.5}}
-        className="max-w-3xl mx-auto px-6">
+      {/* Content — rendered server-side via MDXRemote */}
+      <div className="max-w-3xl mx-auto px-6">
         <MDXRemote source={post.content} components={components}/>
-      </motion.div>
+      </div>
 
       {/* Footer CTA */}
       <div className="max-w-3xl mx-auto px-6 mt-16"
         style={{ borderTop:"1px solid var(--border)", paddingTop:24 }}>
         <p style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:18,
-          marginBottom:8 }}>Enjoyed this? Let's connect.</p>
+          marginBottom:8 }}>Enjoyed this? Let&apos;s connect.</p>
         <div style={{ display:"flex", gap:12, flexWrap:"wrap" }}>
           <Link href="/contact" style={{ padding:"9px 20px", background:"#e8a838",
             color:"#0e0e0e", textDecoration:"none", fontFamily:"'JetBrains Mono',monospace",

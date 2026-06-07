@@ -40,6 +40,16 @@ export const metadata: Metadata = {
     "vaibhav bansal frontend developer",
     "vaibhav bansal portfolio",
     "vaibhav bansal developer",
+    "best software developer",
+    "best full stack developer",
+    "java developer",
+    "python developer",
+    "react developer",
+    "node.js developer",
+    "typescript developer",
+    "aws developer",
+    "azure developer",
+    "ai engineer",
 
     // ── Hire-intent — AI / ML ──────────────────────────────────────
     "hire AI engineer United States",
@@ -54,6 +64,9 @@ export const metadata: Metadata = {
     "hire LangChain developer",
     "hire full stack AI developer",
     "AI software engineer available",
+    "best AI software developer",
+    "best LLM developer",
+    "experienced AI engineer for hire",
 
     // ── Hire-intent — Software Engineering ────────────────────────
     "hire software engineer United States",
@@ -110,6 +123,66 @@ export const metadata: Metadata = {
     "Docker developer",
     "Kubernetes engineer",
 
+    // ── Data & Analytics ──────────────────────────────────────────
+    "data engineer",
+    "data engineer United States",
+    "hire data engineer",
+    "data engineer for hire US",
+    "data pipeline engineer",
+    "ETL developer",
+    "Apache Spark engineer",
+    "Apache Airflow developer",
+    "Kafka developer",
+    "Snowflake developer",
+    "Azure data engineer",
+    "AWS data engineer",
+    "dbt developer",
+    "data warehouse engineer",
+    "stream processing engineer",
+    "real-time data engineer",
+
+    // ── Languages ─────────────────────────────────────────────────
+    "Java developer",
+    "Java developer United States",
+    "Spring Boot developer",
+    "hire Java developer",
+    "Python engineer",
+    "Python developer United States",
+    "hire Python engineer",
+
+    // ── Frontend & UI ─────────────────────────────────────────────
+    "React developer",
+    "Next.js engineer",
+    "frontend engineer",
+    "frontend developer engineer",
+    "FDE engineer",
+    "UI engineer",
+    "GraphQL developer",
+    "GraphQL engineer",
+    "REST API developer",
+
+    // ── Methodology & soft skills ─────────────────────────────────
+    "Agile developer",
+    "Agile software engineer",
+    "Scrum engineer",
+    "CI/CD engineer",
+    "DevOps engineer",
+    "DevSecOps engineer",
+    "microservices engineer",
+    "distributed systems engineer",
+    "system design engineer",
+    "cloud engineer",
+    "cloud developer United States",
+
+    // ── AI tooling ────────────────────────────────────────────────
+    "prompt engineer",
+    "LLM fine-tuning engineer",
+    "Hugging Face developer",
+    "OpenAI API developer",
+    "AI application developer",
+    "conversational AI developer",
+    "agentic AI developer",
+
     // ── Portfolio / discovery ──────────────────────────────────────
     "best AI engineer portfolio",
     "best software engineer portfolio",
@@ -118,6 +191,7 @@ export const metadata: Metadata = {
     "full stack developer portfolio",
     "backend developer portfolio",
     "frontend developer portfolio",
+    "data engineer portfolio",
   ],
 
   authors: [{ name: "Vaibhav Bansal", url: BASE_URL }],
@@ -134,6 +208,13 @@ export const metadata: Metadata = {
     description:
       "AI Engineer & Full-Stack Developer available in the United States. 5+ years shipping production AI — LangChain · RAG · LLMs · Python · React · AWS. Open to full-time, remote & relocation.",
     images: [
+      {
+        url: "/avatar.jpg",
+        width: 800,
+        height: 800,
+        alt: "Vaibhav Bansal — AI Engineer & Software Developer",
+        type: "image/jpeg",
+      },
       {
         url: "/og-image.png",
         width: 1200,
@@ -155,7 +236,7 @@ export const metadata: Metadata = {
     title: "Vaibhav Bansal | Top AI Engineer in the United States",
     description:
       "AI Engineer available in the US. LangChain · RAG · LLMs · Python · React · AWS. 5+ years. Open to opportunities.",
-    images: ["/og-image.png"],
+    images: ["/avatar.jpg", "/og-image.png"],
   },
 
   robots: {
@@ -209,12 +290,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "@type": "Person",
                 name: "Vaibhav Bansal",
                 url: BASE_URL,
-                image: `${BASE_URL}/og-image.png`,
+                image: {
+                  "@type": "ImageObject",
+                  url: `${BASE_URL}/avatar.jpg`,
+                  width: 800,
+                  height: 800,
+                  caption: "Vaibhav Bansal — AI Engineer & Software Developer",
+                },
                 sameAs: [
                   "https://github.com/VaibhavBansal26",
                   "https://www.linkedin.com/in/vaibhavbansal-profile",
                   "https://leetcode.com/vaibhav_bansal26",
                   "https://orcid.org/0000-0002-5433-0385",
+                  "https://www.youtube.com/@VaibhavBansalCode",
                 ],
                 jobTitle: "AI Engineer",
                 description: "AI Engineer and Software Developer with 5+ years of experience in the United States. Specializes in LangChain, RAG, LLMs, Python, React, and AWS.",

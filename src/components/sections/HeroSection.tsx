@@ -141,8 +141,9 @@ function AvatarRing() {
         transition={{ duration:.85, delay:.3, ease:[.22,1,.36,1] }}
         className="absolute rounded-full overflow-hidden"
         style={{ width:286, height:286, border:"2px solid #e8a838", boxShadow:"0 0 60px rgba(232,168,56,.25)" }}>
-        <Image src={personal.avatar} alt="Vaibhav Bansal" fill priority className="object-cover"
-          style={{ filter:"brightness(.9) contrast(1.05)" }} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={personal.avatar} alt="Vaibhav Bansal"
+          style={{ width:"100%", height:"100%", objectFit:"cover", filter:"brightness(.9) contrast(1.05)" }} />
         <div className="absolute inset-0"
           style={{ background:"linear-gradient(to top,rgba(14,14,14,.5) 0%,transparent 50%)" }} />
       </motion.div>
@@ -288,7 +289,7 @@ export default function HeroSection() {
                 style={{ color:"var(--text-muted)" }}>
                 5+ years shipping production AI & full-stack systems. M.S. Data Science from{" "}
                 <span style={{ color:"var(--text)", fontWeight:500 }}>SUNY Buffalo</span>.
-                {" "}Ex-Wipro · Ex-DashClicks · Research Assistant · npm publisher.
+                {" "}Wipro · DashClicks · SUNY Research Assistant · npm publisher.
               </motion.p>
 
               <motion.div variants={up} className="mt-9 flex flex-wrap gap-4">

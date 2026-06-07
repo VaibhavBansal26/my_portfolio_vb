@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { experience, education, skills, certifications, research, personal } from "@/data/portfolio";
+import { experience, academicExperience, education, skills, certifications, research, personal } from "@/data/portfolio";
 import Link from "next/link";
 
 export default function ResumeView() {
@@ -37,16 +37,16 @@ export default function ResumeView() {
           Software Engineer and AI Engineer with 5+ years of experience building scalable applications
           and AI-powered systems. M.S. in Engineering Science & Data Science from SUNY Buffalo.
           Expert in Python, React, Next.js, Docker, AWS, LangChain, RAG, and cloud-native architectures.
-          Proven track record at Wipro and DashClicks. Research contributor, open-source publisher, Teaching Assistant.
+          Proven track record at Wipro Technologies and DashClicks. Research Assistant, Graduate Teaching Assistant, and Graduate Student Assistant at SUNY Buffalo. Open-source npm publisher and published Springer research author.
         </p>
       </section>
 
-      {/* Experience */}
+      {/* Industry Experience */}
       <section>
-        <h3 className="section-label mb-6">Experience</h3>
+        <h3 className="section-label mb-6">Work Experience</h3>
         <div className="space-y-8">
-          {experience.map((exp) => (
-            <div key={exp.company} className="border-l border-[var(--border)] pl-6">
+          {experience.map((exp, idx) => (
+            <div key={`${exp.company}-${idx}`} className="border-l border-[var(--accent)] pl-6">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1">
                 <div>
                   <p className="font-bold text-[var(--text)]">{exp.role}</p>
@@ -54,14 +54,34 @@ export default function ResumeView() {
                 </div>
                 <p className="font-mono text-xs text-[var(--text-muted)]">{exp.period}</p>
               </div>
-              <p className="text-[var(--text-muted)] text-sm mt-2 leading-relaxed">
-                {exp.description}
-              </p>
+              <p className="text-[var(--text-muted)] text-sm mt-2 leading-relaxed">{exp.description}</p>
               <div className="flex flex-wrap gap-2 mt-2">
                 {exp.tech.map((t) => (
-                  <span key={t} className="font-mono text-[10px] text-[var(--text-muted)]">
-                    {t}
-                  </span>
+                  <span key={t} className="font-mono text-[10px] text-[var(--text-muted)]">{t}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Academic Experience */}
+      <section>
+        <h3 className="section-label mb-6">Academic Experience</h3>
+        <div className="space-y-8">
+          {academicExperience.map((exp, idx) => (
+            <div key={`${exp.role}-${idx}`} className="border-l-2 pl-6" style={{ borderColor:"#38bdf8" }}>
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1">
+                <div>
+                  <p className="font-bold text-[var(--text)]">{exp.role}</p>
+                  <p className="font-mono text-xs" style={{ color:"#38bdf8" }}>{exp.company} · {exp.location}</p>
+                </div>
+                <p className="font-mono text-xs text-[var(--text-muted)]">{exp.period}</p>
+              </div>
+              <p className="text-[var(--text-muted)] text-sm mt-2 leading-relaxed">{exp.description}</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {exp.tech.map((t) => (
+                  <span key={t} className="font-mono text-[10px] text-[var(--text-muted)]">{t}</span>
                 ))}
               </div>
             </div>

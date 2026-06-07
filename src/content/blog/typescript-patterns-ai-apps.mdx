@@ -1,0 +1,150 @@
+---
+title: "TypeScript Patterns I Use in Every AI Application"
+date: "2025-03-18"
+description: "Practical TypeScript patterns for building robust AI-powered applications — type-safe LLM responses, streaming, error handling, and more."
+tags: ["TypeScript", "AI", "LangChain", "OpenAI", "Patterns"]
+published: true
+---
+
+# TypeScript Patterns I Use in Every AI Application
+
+Building AI applications in TypeScript adds a layer of safety that is genuinely useful — LLM APIs return untyped JSON, and without a good type strategy, bugs hide until production. Here are the patterns I reach for every time.
+
+## 1. Typed LLM Response Schemas with Zod
+
+Never trust raw LLM output. Define a schema and validate before using:
+
+```typescript
+import { z } from 'zod';
+
+const AnalysisSchema = z.object({
+  summary: z.string(),
+  sentiment: z.enum(['positive', 'negative', 'neutral']),
+  confidence: z.number().min(0).max(1),
+  keywords: z.array(z.string()),
+});
+
+type Analysis = z.infer<typeof AnalysisSchema>;
+
+async function analyzeText(text: string): Promise<Analysis> {
+  const raw = await openai.chat.completions.create({
+    model: 'gpt-4o',
+    messages: [{ role: 'user', content: `Analyze: ${text}` }],
+    response_format: { type: 'json_object' },
+  });
+
+  const parsed = JSON.parse(raw.choices[0].message.content ?? '{}');
+  return AnalysisSchema.parse(parsed); // throws if schema mismatch
+}
+```
+
+## 2. Discriminated Unions for AI Pipeline Results
+
+AI pipelines have multiple failure modes. Model them explicitly:
+
+```typescript
+type PipelineResult<T> =
+  | { status: 'success'; data: T; latencyMs: number }
+  | { status: 'rate_limited'; retryAfterMs: number }
+  | { status: 'context_overflow'; tokenCount: number }
+  | { status: 'error'; message: string };
+
+async function runPipeline(input: string): Promise<PipelineResult<Analysis>> {
+  try {
+    const start = Date.now();
+    const data = await analyzeText(input);
+    return { status: 'success', data, latencyMs: Date.now() - start };
+  } catch (err) {
+    if (err instanceof RateLimitError) {
+      return { status: 'rate_limited', retryAfterMs: err.retryAfter * 1000 };
+    }
+    return { status: 'error', message: String(err) };
+  }
+}
+
+// Usage — TypeScript forces you to handle every case
+const result = await runPipeline(userInput);
+if (result.status === 'success') {
+  console.log(result.data.summary);   // ✅ typed
+} else if (result.status === 'rate_limited') {
+  await sleep(result.retryAfterMs);   // ✅ typed
+}
+```
+
+## 3. Streaming with AsyncIterator Types
+
+OpenAI streaming returns chunks. Type them properly:
+
+```typescript
+async function* streamCompletion(
+  prompt: string
+): AsyncGenerator<string, void, unknown> {
+  const stream = await openai.chat.completions.create({
+    model: 'gpt-4o',
+    messages: [{ role: 'user', content: prompt }],
+    stream: true,
+  });
+
+  for await (const chunk of stream) {
+    const delta = chunk.choices[0]?.delta?.content;
+    if (delta) yield delta;
+  }
+}
+
+// Consume it
+for await (const token of streamCompletion('Explain RAG')) {
+  process.stdout.write(token);
+}
+```
+
+## 4. Generic RAG Context Type
+
+When building RAG pipelines, a generic context type keeps retrieval and generation loosely coupled:
+
+```typescript
+interface RAGContext<TMetadata = Record<string, unknown>> {
+  content: string;
+  score: number;
+  metadata: TMetadata;
+  source: string;
+}
+
+interface DocumentMetadata {
+  pageNumber: number;
+  filename: string;
+  lastModified: Date;
+}
+
+type DocumentContext = RAGContext<DocumentMetadata>;
+
+async function retrieve(query: string): Promise<DocumentContext[]> {
+  // vector DB call returns typed results
+}
+```
+
+## 5. Const Assertion for Model Names
+
+Avoid magic strings — define allowed models once:
+
+```typescript
+const MODELS = {
+  fast: 'gpt-4o-mini',
+  capable: 'gpt-4o',
+  embedding: 'text-embedding-3-small',
+} as const;
+
+type ModelKey = keyof typeof MODELS;
+type ModelId = (typeof MODELS)[ModelKey];
+
+function createClient(model: ModelKey) {
+  return new OpenAIClient({ model: MODELS[model] });
+}
+```
+
+## Wrapping Up
+
+These five patterns — Zod validation, discriminated unions, typed streaming, generic RAG contexts, and const assertions — have caught dozens of bugs before they reached production in my AI projects. TypeScript's type system is especially valuable with LLMs because the API surface is inherently dynamic.
+
+---
+
+*Building AI applications? Let's connect on [LinkedIn](https://www.linkedin.com/in/vaibhavbansal-profile/) or check my [GitHub](https://github.com/VaibhavBansal26) for open-source AI projects.*

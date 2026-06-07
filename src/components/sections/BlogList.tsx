@@ -1,6 +1,7 @@
 "use client";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import type { BlogPost } from "@/lib/blog";
 import { blogs, youtubeVideos } from "@/data/portfolio";
@@ -115,10 +116,10 @@ function VideoRow({ video, index, inView }: { video: typeof youtubeVideos[0]; in
             {/* Thumbnail */}
             <div style={{ position:"relative", width:130, height:74, flexShrink:0, overflow:"hidden", background:"var(--surface)", border:"1px solid var(--border)" }}>
               {!video.youtubeId.includes("REPLACE") ? (
-                <img src={video.thumbnail} alt={video.title}
-                  style={{ width:"100%", height:"100%", objectFit:"cover", display:"block",
-                    transform: hov ? "scale(1.05)" : "scale(1)", transition:"transform .3s" }}
-                  onError={e => { (e.currentTarget as HTMLImageElement).parentElement!.style.background = "#0d0820"; }}/>
+                <Image src={video.thumbnail} alt={video.title} fill
+                  sizes="130px"
+                  style={{ objectFit:"cover",
+                    transform: hov ? "scale(1.05)" : "scale(1)", transition:"transform .3s" }}/>
               ) : (
                 <div style={{ width:"100%", height:"100%", background:"linear-gradient(135deg,#0d0820,#1a0e35)", display:"flex", alignItems:"center", justifyContent:"center" }}>
                   <FiPlay size={18} style={{ color:"rgba(232,168,56,.5)" }}/>
@@ -281,11 +282,11 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
       {/* ── Footer links ── */}
       <div style={{ marginTop:24, paddingTop:16, borderTop:"1px solid var(--border)", display:"flex", gap:20, flexWrap:"wrap", alignItems:"center" }}>
-        <Link href="https://medium.com/@vaibhav.bansal945" target="_blank" rel="noopener noreferrer"
+        <Link href="https://www.medium.com/@vaibhav.bansal945" target="_blank" rel="noopener noreferrer"
           style={{ display:"inline-flex", alignItems:"center", gap:5, fontFamily:"'JetBrains Mono',monospace", fontSize:9, color:"var(--accent)", textDecoration:"none", letterSpacing:".1em", textTransform:"uppercase" }}>
           <FiExternalLink size={11}/> All on Medium
         </Link>
-        <Link href="https://youtube.com/@vaibhavbansal" target="_blank" rel="noopener noreferrer"
+        <Link href="https://www.youtube.com/@VaibhavBansalCode" target="_blank" rel="noopener noreferrer"
           style={{ display:"inline-flex", alignItems:"center", gap:5, fontFamily:"'JetBrains Mono',monospace", fontSize:9, color:"#f87171", textDecoration:"none", letterSpacing:".1em", textTransform:"uppercase" }}>
           <FiExternalLink size={11}/> YouTube Channel
         </Link>

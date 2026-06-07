@@ -18,12 +18,11 @@ export default function AboutHero() {
           className="flex flex-col items-center gap-6"
         >
           <div className="relative w-52 h-52 rounded-sm overflow-hidden border border-[var(--accent)]">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={personal.avatar}
               alt="Vaibhav Bansal"
-              fill
-              className="object-cover"
-              priority
+              style={{ width:"100%", height:"100%", objectFit:"cover" }}
             />
           </div>
 
@@ -89,8 +88,10 @@ export default function AboutHero() {
             <p>
               I&apos;ve worked at <strong className="text-[var(--text)]">Wipro Technologies</strong> and{" "}
               <strong className="text-[var(--text)]">DashClicks</strong>, architecting and deploying
-              production-grade platforms that drive measurable business impact. At UB, I served as
-              a Research Assistant and Teaching Assistant for courses in Data Science and Machine Learning at Scale.
+              production-grade platforms that drive measurable business impact. At SUNY Buffalo, I served as
+              a <strong className="text-[var(--text)]">Graduate Teaching Assistant</strong> (EAS 503 &amp; CDA 500),{" "}
+              <strong className="text-[var(--text)]">Graduate Student Assistant</strong>, and currently a{" "}
+              <strong className="text-[var(--text)]">Research Assistant</strong> working on applied AI/ML systems.
             </p>
             <p>
               I&apos;m passionate about modern AI-driven development — leveraging{" "}
@@ -113,7 +114,7 @@ export default function AboutHero() {
             {[
               { label: "Degree", value: "M.S. Data Science, SUNY Buffalo" },
               { label: "B.Tech", value: "Computer Science, VIT University" },
-              { label: "Experience", value: "Ex-Wipro · Ex-DashClicks" },
+              { label: "Experience", value: "Wipro · DashClicks · SUNY UB" },
               { label: "Focus", value: "AI/ML · Full Stack · Cloud" },
             ].map(({ label, value }) => (
               <div key={label} className="border-l-2 border-[var(--accent)] pl-4">

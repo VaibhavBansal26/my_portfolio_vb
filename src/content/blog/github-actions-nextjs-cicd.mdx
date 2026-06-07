@@ -1,0 +1,178 @@
+---
+title: "GitHub Actions CI/CD for Next.js: Lint, Test, and Deploy Automatically"
+date: "2025-01-22"
+description: "Set up a complete GitHub Actions pipeline for your Next.js app — automated lint, TypeScript checks, Lighthouse audits on PRs, and zero-downtime deploys on merge."
+tags: ["GitHub Actions", "CI/CD", "Next.js", "DevOps", "Automation"]
+published: true
+---
+
+# GitHub Actions CI/CD for Next.js: Lint, Test, and Deploy Automatically
+
+A good CI/CD pipeline catches bugs before users do. For my portfolio and client projects, I use three GitHub Actions workflows that together give me confidence that nothing broken ever reaches production.
+
+## The Three-Workflow Strategy
+
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| `ci.yml` | Every PR | Lint + TypeScript + build check |
+| `lighthouse.yml` | PRs to `main` | Performance & SEO audit |
+| `deploy.yml` | Push to `main` | Build + deploy to server |
+
+## Workflow 1: CI Checks on Every PR
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://example.com
+```
+
+This runs in about 2–3 minutes and blocks merges if anything fails.
+
+## Workflow 2: Lighthouse CI on PRs
+
+Lighthouse scores your app on performance, SEO, and accessibility on every PR. A regression in bundle size or missing meta tags gets caught before merge:
+
+```yaml
+# .github/workflows/lighthouse.yml
+name: Lighthouse CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm start &
+        env: { PORT: 3000 }
+      - run: npx wait-on http://localhost:3000 --timeout 30000
+
+      - uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: http://localhost:3000
+          budgetPath: .github/lighthouse-budget.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+```
+
+Set your score thresholds in `.github/lighthouse-budget.json`:
+
+```json
+[{
+  "path": "/*",
+  "assertions": {
+    "categories:performance":   ["warn",  { "minScore": 0.85 }],
+    "categories:seo":           ["error", { "minScore": 0.90 }],
+    "categories:accessibility": ["error", { "minScore": 0.90 }]
+  }
+}]
+```
+
+## Workflow 3: Deploy on Merge to Main
+
+This workflow only runs after CI passes (via `needs`):
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.APP_DIR }}
+            git pull origin main
+            npm ci
+            npm run build
+            echo "Done"
+```
+
+## Required GitHub Secrets
+
+Add these in **Settings → Secrets → Actions**:
+
+| Secret | Value |
+|--------|-------|
+| `SSH_HOST` | Your server IP |
+| `SSH_USERNAME` | SSH user |
+| `SSH_PRIVATE_KEY` | Private key (generate with `ssh-keygen -t ed25519`) |
+| `APP_DIR` | Path to your app on the server |
+| `NEXT_PUBLIC_SITE_URL` | Your live domain |
+| `GH_PAT_TOKEN` | GitHub PAT for the stats API |
+
+## Branch Protection Rules
+
+In **Settings → Branches → Branch protection rules** for `main`:
+
+- ✅ Require status checks to pass before merging (add `CI Checks`)
+- ✅ Require branches to be up to date before merging
+- ✅ Require conversation resolution before merging
+
+This ensures no one (including you) can push broken code to production.
+
+## Result
+
+With this setup:
+- Every PR gets lint + type + build checks automatically
+- Lighthouse audits catch SEO and performance regressions before they ship
+- Merges to `main` trigger a zero-downtime deploy within 3 minutes
+- The `concurrency` key prevents two deploys running at the same time
+
+---
+
+*Questions or improvements? Open an issue on my [GitHub](https://github.com/VaibhavBansal26/my_portfolio_vb) or ping me on [LinkedIn](https://www.linkedin.com/in/vaibhavbansal-profile/).*
