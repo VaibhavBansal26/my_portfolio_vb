@@ -1,6 +1,6 @@
 "use client";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { projects } from "@/data/portfolio";
 import { FiGithub, FiExternalLink, FiArrowRight, FiX, FiPlay, FiMaximize2 } from "react-icons/fi";
@@ -238,12 +238,84 @@ function PCard({ project }: { project: typeof projects[0] }) {
   );
 }
 
+
+/* ── Data Stream ASCII background ── */
+const DATA_LINES = [
+  'const model = new ChatOpenAI({ model: "gpt-4", temperature: 0 })',
+  '► RAG pipeline · 847 chunks ingested · avg 418 tokens',
+  'POST /api/predict  →  200 OK  28ms  {"prediction": 1, "prob": 0.94}',
+  'import { EnsembleRetriever } from "langchain/retrievers"',
+  'accuracy: 0.923  f1_score: 0.911  roc_auc: 0.968',
+  'docker build -t disaster-ai:v2 .  →  Successfully built a3f8d92',
+  'kafka consumer · group: salary-pred · offset: 50241 · lag: 0',
+  '{"embedding": [0.023, -0.441, 0.887, ...], "dim": 1536}',
+  'mlflow.log_metric("accuracy", 0.923)  run_id: a8f3c92b',
+  'SELECT embedding <-> query_vec AS dist FROM chunks ORDER BY dist LIMIT 5',
+  'aws ecs update-service --cluster prod --desired-count 3',
+  'git commit -m "feat: hybrid BM25+semantic retrieval +13% accuracy"',
+  'XGBoost accuracy: 0.923 · SHAP values computed · top feature: cp=3',
+  '► Chroma vectorstore · 847 docs · cosine similarity · k=5',
+  'ResNet-50 epoch 12/20 · val_acc: 0.874 · lr: 0.0001',
+  'spark.read.snowflake().filter(col("salary") > 80000).count()  →  14827',
+];
+
+function DataStreamBg() {
+  const cvRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const cv = cvRef.current;
+    if (!cv) return;
+    const ctx = cv.getContext("2d")!;
+    let raf = 0;
+    const streams: { txt: string; x: number; y: number; speed: number; alpha: number }[] = [];
+
+    const resize = () => {
+      cv.width = cv.offsetWidth;
+      cv.height = cv.offsetHeight;
+      streams.length = 0;
+      DATA_LINES.forEach((txt, i) => {
+        streams.push({
+          txt,
+          x: Math.random() * cv.width * 1.4 - cv.width * 0.2,
+          y: 20 + (i % 15) * 26,
+          speed: 0.22 + Math.random() * 0.28,
+          alpha: 0.06 + Math.random() * 0.08,
+        });
+      });
+    };
+    resize();
+
+    const frame = () => {
+      raf = requestAnimationFrame(frame);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.font = "9px monospace";
+      streams.forEach(s => {
+        ctx.fillStyle = `rgba(232,168,56,${s.alpha})`;
+        ctx.fillText(s.txt, s.x, s.y);
+        s.x -= s.speed;
+        if (s.x < -(s.txt.length * 5.5)) s.x = cv.width + 10;
+      });
+    };
+    raf = requestAnimationFrame(frame);
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(cv);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, []);
+
+  return (
+    <canvas ref={cvRef}
+      style={{ position:"absolute", inset:0, width:"100%", height:"100%", pointerEvents:"none", zIndex:0 }}/>
+  );
+}
+
 export default function FeaturedProjects() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once:true, amount:.05 });
 
   return (
-    <section ref={ref} className="py-24 max-w-6xl mx-auto px-6">
+    <section ref={ref} className="py-24 px-6" style={{ position:"relative", overflow:"hidden" }}>
+      <DataStreamBg />
+      <div className="max-w-6xl mx-auto" style={{ position:"relative", zIndex:1 }}>
       <motion.div variants={stagger} initial="hidden" animate={inView?"show":"hidden"}>
         {/* Header */}
         <motion.div variants={fadeUp} style={{ display:"flex", alignItems:"flex-end",
@@ -271,6 +343,7 @@ export default function FeaturedProjects() {
           {featured.map(p => <PCard key={p.id} project={p}/>)}
         </div>
       </motion.div>
+      </div>
     </section>
   );
 }

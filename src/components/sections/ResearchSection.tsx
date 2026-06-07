@@ -217,6 +217,69 @@ function MagazineBook({ inView }: { inView: boolean }) {
   );
 }
 
+
+/* ── Warp Field ASCII background ── */
+function WarpFieldBg() {
+  const cvRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const cv = cvRef.current;
+    if (!cv) return;
+    const ctx = cv.getContext("2d")!;
+    let raf = 0;
+    const CHARS = "·+*■◆○●▪◇□▫";
+    type Star = { angle: number; dist: number; speed: number; ch: string; size: number };
+    let stars: Star[] = [];
+    let W = 0, H = 0, CX = 0, CY = 0;
+
+    const resize = () => {
+      W = cv.width = cv.offsetWidth;
+      H = cv.height = cv.offsetHeight;
+      CX = W / 2; CY = H / 2;
+      stars = Array.from({ length: 110 }, () => ({
+        angle: Math.random() * Math.PI * 2,
+        dist: Math.random() * Math.max(W, H) * 0.5,
+        speed: 0.35 + Math.random() * 1.1,
+        ch: CHARS[Math.floor(Math.random() * CHARS.length)],
+        size: 7 + Math.random() * 6,
+      }));
+    };
+    resize();
+
+    const frame = () => {
+      raf = requestAnimationFrame(frame);
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "rgba(5,5,5,0.12)";
+      ctx.fillRect(0, 0, W, H);
+      stars.forEach(s => {
+        s.dist += s.speed;
+        const x = CX + Math.cos(s.angle) * s.dist;
+        const y = CY + Math.sin(s.angle) * s.dist;
+        const prog = Math.min(s.dist / Math.max(W, H), 1);
+        const alpha = Math.min(prog * 0.38, 0.28);
+        ctx.font = `${s.size * prog + 5}px monospace`;
+        ctx.fillStyle = `rgba(232,168,56,${alpha})`;
+        ctx.textAlign = "center";
+        ctx.fillText(s.ch, x, y);
+        if (x < -20 || x > W + 20 || y < -20 || y > H + 20) {
+          s.dist = 2 + Math.random() * 20;
+          s.angle = Math.random() * Math.PI * 2;
+          s.ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+        }
+      });
+    };
+    raf = requestAnimationFrame(frame);
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(cv);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, []);
+
+  return (
+    <canvas ref={cvRef}
+      style={{ position:"absolute", inset:0, width:"100%", height:"100%", pointerEvents:"none", zIndex:0 }}/>
+  );
+}
+
 export default function ResearchSection() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once:true, amount:.2 });
@@ -225,6 +288,7 @@ export default function ResearchSection() {
   return (
     <section ref={ref} className="py-24 relative overflow-hidden"
       style={{ borderTop:"1px solid #1a1a1a" }}>
+      <WarpFieldBg />
 
       <div style={{ position:"absolute", inset:0, pointerEvents:"none",
         background:"radial-gradient(ellipse at 25% 50%,rgba(232,168,56,.06) 0%,transparent 55%)" }}/>
