@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import AboutHero from "@/components/sections/AboutHero";
 import PhotoStack from "@/components/sections/PhotoStack";
 import ExperienceSection from "@/components/sections/ExperienceSection";
+import SubwayMap from "@/components/sections/SubwayMap";
 import EducationSection from "@/components/sections/EducationSection";
 import FullSkillsSection from "@/components/sections/FullSkillsSection";
 import CertFlipCards from "@/components/ui/CertFlipCards";
@@ -35,6 +36,7 @@ export default function AboutPage() {
     <>
       <AboutHero />
       <PhotoStack />
+      <SubwayMap />
       <ExperienceSection />
       <EducationSection />
       <FullSkillsSection />

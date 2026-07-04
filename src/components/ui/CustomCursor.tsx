@@ -1,36 +1,37 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
+/**
+ * FRIDAY · Cursor — motion-value driven: zero React re-renders.
+ * Dot tracks instantly; ring trails on a spring. Expands over interactive elements.
+ */
 export default function CustomCursor() {
-  const [dot, setDot] = useState({ x: -100, y: -100 });
-  const [ring, setRing] = useState({ x: -100, y: -100 });
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const ringX = useSpring(x, { stiffness: 300, damping: 28, mass: 0.6 });
+  const ringY = useSpring(y, { stiffness: 300, damping: 28, mass: 0.6 });
+  const ringScale = useMotionValue(1);
 
   useEffect(() => {
-    const moveDot = (e: MouseEvent) => setDot({ x: e.clientX, y: e.clientY });
-    let timeout: ReturnType<typeof setTimeout>;
-    const moveRing = (e: MouseEvent) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setRing({ x: e.clientX, y: e.clientY }), 70);
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    const move = (e: MouseEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+      const t = e.target as HTMLElement;
+      ringScale.set(t.closest("a,button,[role=button],input,textarea") ? 1.8 : 1);
     };
-    window.addEventListener("mousemove", moveDot);
-    window.addEventListener("mousemove", moveRing);
-    return () => {
-      window.removeEventListener("mousemove", moveDot);
-      window.removeEventListener("mousemove", moveRing);
-      clearTimeout(timeout);
-    };
-  }, []);
+    window.addEventListener("mousemove", move, { passive: true });
+    return () => window.removeEventListener("mousemove", move);
+  }, [x, y, ringScale]);
 
   return (
     <>
-      <div
-        className="custom-cursor hidden md:block"
-        style={{ left: dot.x - 4, top: dot.y - 4 }}
-      />
-      <div
-        className="cursor-ring hidden md:block"
-        style={{ left: ring.x - 16, top: ring.y - 16 }}
-      />
+      <motion.div className="custom-cursor hidden md:block"
+        style={{ x, y, translateX: "-50%", translateY: "-50%" }} />
+      <motion.div className="cursor-ring hidden md:block"
+        style={{ x: ringX, y: ringY, scale: ringScale, translateX: "-50%", translateY: "-50%" }} />
     </>
   );
 }

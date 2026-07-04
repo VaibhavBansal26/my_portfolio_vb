@@ -299,7 +299,14 @@ export default function ProjectCaseStudy({project}:{project:typeof projects[0]})
 
         {tab==="Architecture"&&data&&<motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{duration:.3}}>
           <p style={{fontFamily:"'JetBrains Mono',monospace",fontSize:8,letterSpacing:".2em",color:"var(--text-muted)",textTransform:"uppercase",marginBottom:14}}>{data.architecture.length} layers</p>
-          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          <div style={{display:"flex",flexDirection:"column",gap:10,position:"relative"}}>
+            {/* data-flow beam connecting the layers */}
+            <motion.div initial={{scaleY:0}} animate={{scaleY:1}} transition={{duration:1.1,delay:.2,ease:"easeInOut"}}
+              style={{position:"absolute",left:21,top:14,bottom:14,width:1,transformOrigin:"top",
+                background:"linear-gradient(to bottom, var(--reactor-dim), var(--hud-line))",zIndex:0}}/>
+            <motion.div animate={{top:["4%","92%"]}} transition={{duration:2.4,repeat:Infinity,ease:"easeInOut"}}
+              style={{position:"absolute",left:19,width:5,height:5,borderRadius:"50%",
+                background:"var(--reactor)",boxShadow:"0 0 8px var(--reactor)",zIndex:1}}/>
             {data.architecture.map((layer,i)=>(
               <motion.div key={i} initial={{opacity:0,x:-14}} animate={{opacity:1,x:0}} transition={{delay:i*.07}}
                 style={{padding:"14px 18px",border:`1px solid ${layer.color}30`,background:"var(--bg-card)",display:"flex",alignItems:"center",gap:14,position:"relative"}}>

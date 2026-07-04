@@ -97,7 +97,7 @@ export default function InlineMiniGame() {
   const onMouseMove=(e:React.MouseEvent)=>{if(!running||!gameRef.current)return;const r=gameRef.current.getBoundingClientRect();setCatX(((e.clientX-r.left)/r.width)*100);};
 
   return (
-    <section style={{borderTop:"1px solid var(--border)",padding:"64px 0",position:"relative",overflow:"hidden"}}>
+    <section style={{padding:"64px 0",position:"relative",overflow:"hidden"}}>
       <div className="absolute inset-0 pointer-events-none" style={{backgroundImage:"linear-gradient(rgba(232,168,56,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(232,168,56,.02) 1px,transparent 1px)",backgroundSize:"56px 56px"}}/>
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div style={{textAlign:"center",marginBottom:24}}>

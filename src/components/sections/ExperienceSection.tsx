@@ -1,6 +1,7 @@
 "use client";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
+import ScrambleText from "@/components/ui/ScrambleText";
 import { experience, academicExperience } from "@/data/portfolio";
 
 function TimelineList({
@@ -14,9 +15,22 @@ function TimelineList({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.1 });
+  const reduce = useReducedMotion();
+
+  /* FRIDAY · power line — beam energizes top→bottom as the list scrolls through view */
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.45"] });
+  const beamScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <div ref={ref} style={{ display:"flex", flexDirection:"column", gap:0 }}>
+    <div ref={ref} style={{ display:"flex", flexDirection:"column", gap:0, position:"relative" }}>
+      {!reduce && (
+        <motion.div aria-hidden style={{
+          position:"absolute", left:119, top:6, bottom:36, width:2, zIndex:1,
+          background:`linear-gradient(to bottom, ${accentColor}, ${accentColor}66)`,
+          boxShadow:`0 0 8px ${accentColor}66`,
+          scaleY: beamScale, transformOrigin:"top",
+        }}/>
+      )}
       {items.map((exp, i) => (
         <motion.div key={`${exp.company}-${startIndex + i}`}
           initial={{ opacity:0, x:-24 }}
@@ -33,7 +47,7 @@ function TimelineList({
               boxShadow:`0 0 0 1px ${accentColor}4d, 0 0 12px ${accentColor}4d`, zIndex:2 }}/>
             {i < items.length - 1 && (
               <div style={{ position:"absolute", right:-1, top:20, bottom:-36, width:1,
-                background:`linear-gradient(to bottom,${accentColor}80,${accentColor}1a)` }}/>
+                background:`linear-gradient(to bottom,${accentColor}26,${accentColor}0d)` }}/>
             )}
           </div>
 
@@ -109,7 +123,7 @@ export default function ExperienceSection() {
             Work{" "}
             <span style={{ background:"linear-gradient(120deg,#e8a838,#f4c96a)",
               WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>
-              Experience
+              <ScrambleText text="Experience" />
             </span>
           </h2>
         </motion.div>
@@ -127,7 +141,7 @@ export default function ExperienceSection() {
             Academic{" "}
             <span style={{ background:"linear-gradient(120deg,#38bdf8,#7dd3fc)",
               WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>
-              Roles
+              <ScrambleText text="Roles" />
             </span>
           </h2>
           <p style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:10,

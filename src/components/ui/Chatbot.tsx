@@ -33,7 +33,7 @@ function matchVoiceCommand(text: string, router: ReturnType<typeof useRouter>) {
   return null;
 }
 
-// EDITH voice — UK Female, robotic tuning
+// FRIDAY voice — Irish female preferred, robotic tuning
 function speak(text: string, enabled: boolean) {
   if (!enabled || typeof window === "undefined" || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
@@ -47,6 +47,8 @@ function speak(text: string, enabled: boolean) {
     const voices = window.speechSynthesis.getVoices();
     // Priority order: Google UK English Female → any UK English → any English
     const voice =
+      voices.find(v => v.lang === "en-IE" && v.name.toLowerCase().includes("female")) ||
+      voices.find(v => v.lang === "en-IE") ||
       voices.find(v => v.name === "Google UK English Female") ||
       voices.find(v => v.lang === "en-GB" && v.name.toLowerCase().includes("female")) ||
       voices.find(v => v.lang === "en-GB") ||
@@ -61,14 +63,14 @@ function speak(text: string, enabled: boolean) {
   else window.speechSynthesis.onvoiceschanged = setVoice;
 }
 
-const GREETING = "Hello. I am E.D.I.T.H. Even Dead I'm The Hero. Vaibhav's personal AI assistant. You can ask me anything, or say a voice command like — show projects, contact Vaibhav, or go to blog.";
+const GREETING = "Hi, I'm FRIDAY. Vaibhav's personal AI assistant. Ask me anything, or say a voice command like — show projects, contact Vaibhav, or go to blog.";
 
 export default function Chatbot() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [greeted, setGreeted] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role:"assistant", text:"Hello. I'm **E.D.I.T.H** — *Even Dead I'm The Hero*.\n\nVaibhav's personal AI. Ask me anything, or try a **voice command** — say *\"show projects\"*, *\"contact Vaibhav\"*, or *\"go to blog\"*." }
+    { role:"assistant", text:"Hi, I'm **F.R.I.D.A.Y.** — Vaibhav's personal AI.\n\nAsk me anything, or try a **voice command** — say *\"show projects\"*, *\"contact Vaibhav\"*, or *\"go to blog\"*." }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -79,6 +81,13 @@ export default function Chatbot() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const recRef = useRef<any>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Open via FRIDAY console / proactive nudges
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener("vb-chat-open", onOpen);
+    return () => window.removeEventListener("vb-chat-open", onOpen);
+  }, []);
 
   // Scan line
   useEffect(() => {
@@ -171,7 +180,7 @@ export default function Chatbot() {
             ? <motion.span key="x" initial={{rotate:-90,opacity:0}} animate={{rotate:0,opacity:1}} exit={{rotate:90,opacity:0}} transition={{duration:.18}}
                 style={{fontSize:22,color:"var(--bg)",fontWeight:800,lineHeight:1}}>✕</motion.span>
             : <motion.span key="e" initial={{rotate:90,opacity:0}} animate={{rotate:0,opacity:1}} exit={{rotate:-90,opacity:0}} transition={{duration:.18}}
-                style={{fontFamily:"'Syne',sans-serif",fontSize:16,fontWeight:800,color:"var(--bg)"}}>E</motion.span>
+                style={{fontFamily:"'Syne',sans-serif",fontSize:16,fontWeight:800,color:"var(--bg)"}}>F</motion.span>
           }
         </AnimatePresence>
         {!open && (
@@ -205,14 +214,14 @@ export default function Chatbot() {
                 background:"linear-gradient(135deg,rgba(232,168,56,.3),var(--accent))",
                 display:"flex", alignItems:"center", justifyContent:"center",
                 boxShadow:"0 0 14px rgba(232,168,56,.35)", flexShrink:0 }}>
-                <span style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:13, color:"var(--bg)" }}>E</span>
+                <span style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:13, color:"var(--bg)" }}>F</span>
                 <motion.div animate={{opacity:[1,.3,1]}} transition={{duration:2,repeat:Infinity}}
                   style={{ position:"absolute", bottom:-1, right:-1, width:10, height:10,
                     borderRadius:"50%", background:"#22c55e", border:"2px solid var(--bg-card)" }}/>
               </div>
               <div style={{ flex:1 }}>
-                <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:13, color:"var(--accent)", letterSpacing:".03em" }}>E.D.I.T.H</div>
-                <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:7, color:"rgba(232,168,56,.45)", letterSpacing:".08em" }}>EVEN DEAD I'M THE HERO · ONLINE</div>
+                <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:13, color:"var(--accent)", letterSpacing:".03em" }}>F.R.I.D.A.Y.</div>
+                <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:7, color:"rgba(232,168,56,.45)", letterSpacing:".08em" }}>FRIDAY PROTOCOL · ONLINE</div>
               </div>
               {/* Voice hint badge */}
               <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:7, color:"rgba(232,168,56,.4)",
@@ -298,7 +307,7 @@ export default function Chatbot() {
               )}
               <form onSubmit={e=>{e.preventDefault();send(input);}} style={{ display:"flex", gap:6 }}>
                 <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value)}
-                  placeholder="Ask E.D.I.T.H or say a command..."
+                  placeholder="Ask FRIDAY or say a command..."
                   disabled={loading||listening}
                   style={{ flex:1, padding:"8px 10px", fontSize:12,
                     border:"1px solid rgba(232,168,56,.2)",

@@ -1,5 +1,5 @@
 "use client";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { projects } from "@/data/portfolio";
@@ -16,7 +16,7 @@ const CAT: Record<string, { color: string; border: string; bg: string; grad: str
 };
 
 const stagger = { hidden:{}, show:{ transition:{ staggerChildren:.07, delayChildren:.05 } } };
-const fadeUp = { hidden:{ opacity:0, y:24 }, show:{ opacity:1, y:0, transition:{ duration:.5, ease:[.22,1,.36,1] as const } } };
+const fadeUp = { hidden:{ opacity:0, y:24 }, show:{ opacity:1, y:0, transition:{ duration:.55, ease:[.22,1,.36,1] as const } } };
 
 function Modal({ p, onClose }: { p: typeof projects[0]; onClose: () => void }) {
   const cs = CAT[p.category] ?? CAT["AI/ML"];
@@ -82,268 +82,146 @@ function Modal({ p, onClose }: { p: typeof projects[0]; onClose: () => void }) {
   );
 }
 
-function PCard({ project }: { project: typeof projects[0] }) {
-  const cs = CAT[project.category] ?? CAT["AI/ML"];
-  const [hov, setHov] = useState(false);
-  const [mx, setMx] = useState(50), [my, setMy] = useState(50);
-  const [modal, setModal] = useState(false);
-  const [vidPlay, setVidPlay] = useState(false);
 
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    setMx((e.clientX-r.left)/r.width*100);
-    setMy((e.clientY-r.top)/r.height*100);
-  };
+/* ═══════════ 2026 editorial index — rows + cursor-following preview ═══════════ */
 
+function FloatingPreview({ project }: { project: typeof projects[0] | null }) {
   return (
-    <>
-      <motion.div variants={fadeUp}
-        className="relative overflow-hidden cursor-pointer group"
-        style={{ border:"1px solid var(--border)", background:"var(--bg-card)", transition:"border-color .25s, box-shadow .25s, transform .25s" }}
-        onMouseEnter={()=>setHov(true)}
-        onMouseLeave={()=>{ setHov(false); setVidPlay(false); }}
-        onMouseMove={onMove}
-        whileHover={{ y:-5, borderColor:cs.border, boxShadow:`0 20px 60px rgba(0,0,0,.5), 0 0 24px ${cs.bg}` }}>
-
-        {/* Top accent bar */}
-        <div style={{ height:3, background:`linear-gradient(to right,${cs.color},transparent)` }}/>
-
-        {/* Preview area */}
-        <div style={{ height:160, position:"relative", overflow:"hidden", background:cs.grad }}>
-          {/* Video on hover */}
-          <video src={`/videos/projects/${project.id}.mp4`} autoPlay={vidPlay} muted loop playsInline
-            style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover",
-              opacity:vidPlay?1:0, transition:"opacity .5s", zIndex:2 }}
-            onError={e=>{(e.currentTarget as HTMLVideoElement).style.display="none";}}/>
-
-          {/* Gradient preview */}
-          <div style={{ position:"absolute", inset:0, zIndex:1, display:"flex", flexDirection:"column",
-            alignItems:"center", justifyContent:"center", gap:8,
-            opacity:vidPlay?0:1, transition:"opacity .5s" }}>
-            <div style={{ fontSize:9, color:cs.color, letterSpacing:".1em", textTransform:"uppercase",
-              fontFamily:"'JetBrains Mono',monospace" }}>{project.category}</div>
-            <div style={{ display:"flex", flexWrap:"wrap", gap:4, justifyContent:"center", padding:"0 12px" }}>
-              {project.tech.slice(0,3).map(t=>(
-                <span key={t} style={{ fontSize:7, border:`1px solid ${cs.border}`, color:cs.color,
-                  padding:"2px 6px", background:"rgba(0,0,0,.5)", fontFamily:"'JetBrains Mono',monospace" }}>{t}</span>
-              ))}
-            </div>
-          </div>
-
-          {/* Mouse spotlight */}
-          <div style={{ position:"absolute", inset:0, pointerEvents:"none", zIndex:3,
-            background:`radial-gradient(circle at ${mx}% ${my}%,${cs.bg} 0%,transparent 55%)`,
-            opacity:hov?1:0, transition:"opacity .3s" }}/>
-
-          {/* Action buttons */}
-          <div style={{ position:"absolute", top:8, right:8, zIndex:5, display:"flex", gap:4,
-            opacity:hov?1:0, transition:"opacity .2s" }}>
-            <button onClick={e=>{e.stopPropagation();setVidPlay(v=>!v);}}
-              style={{ padding:"4px 7px", background:"rgba(0,0,0,.7)", border:`1px solid ${cs.border}`,
-                color:cs.color, cursor:"pointer", backdropFilter:"blur(4px)" }}>
-              <FiPlay size={9}/>
-            </button>
-            <button onClick={e=>{e.stopPropagation();setModal(true);}}
-              style={{ padding:"4px 7px", background:"rgba(0,0,0,.7)", border:`1px solid ${cs.border}`,
-                color:cs.color, cursor:"pointer", backdropFilter:"blur(4px)" }}>
-              <FiMaximize2 size={9}/>
-            </button>
-          </div>
-
-          {/* Category badge */}
-          <div style={{ position:"absolute", top:10, left:10, zIndex:5 }}>
-            <span style={{ fontSize:7, background:cs.bg, border:`1px solid ${cs.border}`, color:cs.color,
-              padding:"2px 8px", letterSpacing:".15em", textTransform:"uppercase",
-              fontFamily:"'JetBrains Mono',monospace" }}>{project.category}</span>
-          </div>
-
-          {/* Bottom corner brackets */}
-          {[{bottom:8,left:8},{bottom:8,right:8}].map((pos,i)=>(
-            <div key={i} style={{ position:"absolute", width:10, height:10, ...pos, zIndex:4,
-              borderBottom:`1.5px solid ${cs.border}`,
-              borderLeft:i===0?`1.5px solid ${cs.border}`:undefined,
-              borderRight:i===1?`1.5px solid ${cs.border}`:undefined }}/>
-          ))}
-        </div>
-
-        {/* Content */}
-        <div style={{ padding:"14px 14px 10px" }} onClick={()=>setModal(true)}>
-          <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:6, marginBottom:6 }}>
-            <h3 style={{ fontFamily:"'Syne',sans-serif", fontSize:14, fontWeight:800,
-              color:hov?cs.color:"var(--text)", lineHeight:1.25, transition:"color .2s", flex:1 }}>
-              {project.title}
-            </h3>
-            <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:8,
-              color:"var(--text-muted)", flexShrink:0, marginTop:1 }}>{project.year}</span>
-          </div>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:11, color:"var(--text-muted)",
-            lineHeight:1.6, marginBottom:10 }}>
-            {project.description.slice(0,80)}...
-          </p>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:4 }}>
-            {project.tech.slice(0,3).map(t=>(
-              <span key={t} style={{ fontSize:7, border:"1px solid var(--border)", color:"var(--text-muted)",
-                padding:"2px 6px", fontFamily:"'JetBrains Mono',monospace" }}>{t}</span>
+    <AnimatePresence>
+      {project && (
+        <motion.div key={project.id}
+          initial={{ opacity: 0, scale: .92 }} animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: .95 }} transition={{ duration: .25, ease: [.22,1,.36,1] }}
+          style={{ width: 340, height: 215, overflow: "hidden", position: "relative",
+            background: (CAT[project.category] ?? CAT["AI/ML"]).grad,
+            border: "1px solid var(--border-bright)", boxShadow: "0 30px 80px rgba(0,0,0,.55)" }}>
+          <video src={`/videos/projects/${project.id}.mp4`} autoPlay muted loop playsInline
+            style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover" }}
+            onError={e => { (e.currentTarget as HTMLVideoElement).style.display = "none"; }} />
+          <div style={{ position:"absolute", left:10, bottom:8, display:"flex", gap:6, zIndex:2 }}>
+            {project.tech.slice(0,3).map(t => (
+              <span key={t} className="font-mono" style={{ fontSize:8, padding:"2px 7px",
+                background:"rgba(0,0,0,.65)", color:(CAT[project.category] ?? CAT["AI/ML"]).color,
+                border:`1px solid ${(CAT[project.category] ?? CAT["AI/ML"]).border}` }}>{t}</span>
             ))}
-            {project.tech.length>3&&<span style={{ fontSize:7, color:"var(--text-muted)",
-              fontFamily:"'JetBrains Mono',monospace" }}>+{project.tech.length-3}</span>}
           </div>
-        </div>
-
-        {/* Bottom action bar */}
-        <div style={{ padding:"8px 14px", borderTop:"1px solid var(--border)", background:"var(--surface)",
-          display:"flex", alignItems:"center", gap:8 }}>
-          {project.github&&(
-            <a href={project.github} target="_blank" rel="noopener noreferrer"
-              onClick={e=>e.stopPropagation()}
-              style={{ color:"var(--text-muted)", transition:"color .2s", display:"flex" }}
-              onMouseEnter={e=>((e.currentTarget as HTMLAnchorElement).style.color=cs.color)}
-              onMouseLeave={e=>((e.currentTarget as HTMLAnchorElement).style.color="var(--text-muted)")}>
-              <FiGithub size={13}/>
-            </a>
-          )}
-          {(project as any).npm&&(
-            <a href={(project as any).npm} target="_blank" rel="noopener noreferrer"
-              onClick={e=>e.stopPropagation()}
-              style={{ color:"var(--text-muted)", transition:"color .2s", display:"flex" }}
-              onMouseEnter={e=>((e.currentTarget as HTMLAnchorElement).style.color=cs.color)}
-              onMouseLeave={e=>((e.currentTarget as HTMLAnchorElement).style.color="var(--text-muted)")}>
-              <SiNpm size={13}/>
-            </a>
-          )}
-          <div style={{ flex:1 }}/>
-          <div style={{ display:"flex", gap:8 }}>
-            <motion.span animate={{ opacity:hov?1:0, x:hov?0:4 }} transition={{ duration:.18 }}
-              style={{ fontSize:8, color:cs.color, fontFamily:"'JetBrains Mono',monospace", cursor:"pointer" }}
-              onClick={()=>setModal(true)}>
-              Preview ⤢
-            </motion.span>
-            <Link href={`/projects/${project.id}`}
-              onClick={e=>e.stopPropagation()}
-              style={{ fontSize:8, color:"#e8a838", fontFamily:"'JetBrains Mono',monospace",
-                textDecoration:"none", opacity:hov?1:0, transition:"opacity .18s" }}>
-              Case Study →
-            </Link>
-          </div>
-        </div>
-
-        {/* Bottom sweep line */}
-        <motion.div animate={{ scaleX:hov?1:0 }} transition={{ duration:.4 }}
-          style={{ position:"absolute", bottom:0, left:0, right:0, height:1, originX:0,
-            background:`linear-gradient(to right,transparent,${cs.color},transparent)` }}/>
-      </motion.div>
-
-      <AnimatePresence>{modal&&<Modal p={project} onClose={()=>setModal(false)}/>}</AnimatePresence>
-    </>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
-
-/* ── Data Stream ASCII background ── */
-const DATA_LINES = [
-  'const model = new ChatOpenAI({ model: "gpt-4", temperature: 0 })',
-  '► RAG pipeline · 847 chunks ingested · avg 418 tokens',
-  'POST /api/predict  →  200 OK  28ms  {"prediction": 1, "prob": 0.94}',
-  'import { EnsembleRetriever } from "langchain/retrievers"',
-  'accuracy: 0.923  f1_score: 0.911  roc_auc: 0.968',
-  'docker build -t disaster-ai:v2 .  →  Successfully built a3f8d92',
-  'kafka consumer · group: salary-pred · offset: 50241 · lag: 0',
-  '{"embedding": [0.023, -0.441, 0.887, ...], "dim": 1536}',
-  'mlflow.log_metric("accuracy", 0.923)  run_id: a8f3c92b',
-  'SELECT embedding <-> query_vec AS dist FROM chunks ORDER BY dist LIMIT 5',
-  'aws ecs update-service --cluster prod --desired-count 3',
-  'git commit -m "feat: hybrid BM25+semantic retrieval +13% accuracy"',
-  'XGBoost accuracy: 0.923 · SHAP values computed · top feature: cp=3',
-  '► Chroma vectorstore · 847 docs · cosine similarity · k=5',
-  'ResNet-50 epoch 12/20 · val_acc: 0.874 · lr: 0.0001',
-  'spark.read.snowflake().filter(col("salary") > 80000).count()  →  14827',
-];
-
-function DataStreamBg() {
-  const cvRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const cv = cvRef.current;
-    if (!cv) return;
-    const ctx = cv.getContext("2d")!;
-    let raf = 0;
-    const streams: { txt: string; x: number; y: number; speed: number; alpha: number }[] = [];
-
-    const resize = () => {
-      cv.width = cv.offsetWidth;
-      cv.height = cv.offsetHeight;
-      streams.length = 0;
-      DATA_LINES.forEach((txt, i) => {
-        streams.push({
-          txt,
-          x: Math.random() * cv.width * 1.4 - cv.width * 0.2,
-          y: 20 + (i % 15) * 26,
-          speed: 0.22 + Math.random() * 0.28,
-          alpha: 0.06 + Math.random() * 0.08,
-        });
-      });
-    };
-    resize();
-
-    const frame = () => {
-      raf = requestAnimationFrame(frame);
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      ctx.font = "9px monospace";
-      streams.forEach(s => {
-        ctx.fillStyle = `rgba(232,168,56,${s.alpha})`;
-        ctx.fillText(s.txt, s.x, s.y);
-        s.x -= s.speed;
-        if (s.x < -(s.txt.length * 5.5)) s.x = cv.width + 10;
-      });
-    };
-    raf = requestAnimationFrame(frame);
-
-    const ro = new ResizeObserver(resize);
-    ro.observe(cv);
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
-  }, []);
-
+function IndexRow({ project, i, onHover, onLeave, onOpen }: {
+  project: typeof projects[0]; i: number;
+  onHover: () => void; onLeave: () => void; onOpen: () => void;
+}) {
+  const cs = CAT[project.category] ?? CAT["AI/ML"];
+  const [hov, setHov] = useState(false);
   return (
-    <canvas ref={cvRef}
-      style={{ position:"absolute", inset:0, width:"100%", height:"100%", pointerEvents:"none", zIndex:0 }}/>
+    <motion.div
+      initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: .55, delay: i * .06, ease: [.22,1,.36,1] }}
+      onMouseEnter={() => { setHov(true); onHover(); }}
+      onMouseLeave={() => { setHov(false); onLeave(); }}
+      onClick={onOpen}
+      role="button" tabIndex={0}
+      onKeyDown={e => e.key === "Enter" && onOpen()}
+      style={{ display: "grid", gridTemplateColumns: "70px 1fr auto", alignItems: "baseline",
+        gap: 24, padding: "30px 8px", cursor: "pointer",
+        borderBottom: "1px solid var(--border)", position: "relative" }}>
+      {/* accent wipe on hover */}
+      <motion.div animate={{ scaleX: hov ? 1 : 0 }} transition={{ duration: .45, ease: [.22,1,.36,1] }}
+        style={{ position:"absolute", left:0, right:0, bottom:-1, height:1,
+          background: cs.color, transformOrigin: "left" }} />
+      <span className="font-mono" style={{ fontSize: 12, color: hov ? cs.color : "var(--text-muted)",
+        transition: "color .25s" }}>
+        {String(i+1).padStart(2,"0")}
+      </span>
+      <motion.h3 animate={{ x: hov ? 16 : 0 }} transition={{ duration: .35, ease: [.22,1,.36,1] }}
+        className="font-display font-extrabold"
+        style={{ fontSize: "clamp(1.4rem,3.2vw,2.6rem)", lineHeight: 1.1,
+          color: hov ? "var(--text)" : "var(--text-muted)", transition: "color .25s" }}>
+        {project.title}
+      </motion.h3>
+      <div className="hidden md:flex items-baseline gap-5 font-mono"
+        style={{ fontSize: 10, letterSpacing: ".15em", textTransform: "uppercase" }}>
+        <span style={{ color: cs.color }}>{project.category}</span>
+        <span style={{ color: "var(--text-muted)" }}>{project.year}</span>
+        <motion.span animate={{ x: hov ? 4 : 0, opacity: hov ? 1 : .4 }}
+          style={{ color: "var(--text)" }}>↗</motion.span>
+      </div>
+    </motion.div>
   );
 }
 
 export default function FeaturedProjects() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once:true, amount:.05 });
+  const [active, setActive] = useState<typeof projects[0] | null>(null);
+  const [modal, setModal] = useState<typeof projects[0] | null>(null);
+  const [fine, setFine] = useState(false);
+
+  // cursor-follow springs
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const px = useSpring(mx, { stiffness: 220, damping: 26, mass: .6 });
+  const py = useSpring(my, { stiffness: 220, damping: 26, mass: .6 });
+
+  useEffect(() => {
+    setFine(window.matchMedia("(pointer: fine)").matches);
+    const move = (e: MouseEvent) => { mx.set(e.clientX + 28); my.set(e.clientY - 110); };
+    window.addEventListener("mousemove", move, { passive: true });
+    return () => window.removeEventListener("mousemove", move);
+  }, [mx, my]);
 
   return (
-    <section ref={ref} className="py-24 px-6" style={{ position:"relative", overflow:"hidden" }}>
-      <DataStreamBg />
-      <div className="max-w-6xl mx-auto" style={{ position:"relative", zIndex:1 }}>
-      <motion.div variants={stagger} initial="hidden" animate={inView?"show":"hidden"}>
+    <section className="py-24 relative">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <motion.div variants={fadeUp} style={{ display:"flex", alignItems:"flex-end",
-          justifyContent:"space-between", marginBottom:36 }}>
+        <motion.div initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
+          viewport={{ once:true }} transition={{ duration:.6 }}
+          style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:24 }}>
           <div>
             <span className="section-label">Selected Work</span>
-            <h2 className="font-display font-extrabold mt-2" style={{ fontSize:"clamp(2rem,4vw,3rem)" }}>
-              Featured{" "}
+            <h2 className="font-display font-extrabold mt-2"
+              style={{ fontSize:"clamp(2.4rem,5vw,4rem)", lineHeight:1 }}>
+              featured{" "}
               <span style={{ background:"linear-gradient(120deg,#e8a838,#f4c96a)",
                 WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>
-                Projects
+                projects
               </span>
             </h2>
           </div>
-          <Link href="/portfolio" className="hidden md:inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider"
-            style={{ color:"var(--text-muted)", textDecoration:"none", transition:"color .2s" }}
-            onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.color="#e8a838"}
-            onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.color="var(--text-muted)"}>
+          <Link href="/portfolio" className="hidden md:inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider hover-underline"
+            style={{ color:"var(--text-muted)", textDecoration:"none" }}>
             All Projects <FiArrowRight size={13}/>
           </Link>
         </motion.div>
 
-        {/* 3 columns × 2 rows = 6 cards */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14 }}>
-          {featured.map(p => <PCard key={p.id} project={p}/>)}
+        {/* Index list */}
+        <div style={{ borderTop: "1px solid var(--border)" }}>
+          {featured.map((p, i) => (
+            <IndexRow key={p.id} project={p} i={i}
+              onHover={() => setActive(p)} onLeave={() => setActive(null)}
+              onOpen={() => { setActive(null); setModal(p); }} />
+          ))}
         </div>
-      </motion.div>
+
+        <p className="font-mono text-[9px] tracking-[.25em] uppercase mt-4 md:hidden"
+          style={{ color: "var(--text-muted)" }}>tap a project for details</p>
       </div>
+
+      {/* Cursor-following preview (fine pointers only) */}
+      {fine && (
+        <motion.div className="hidden lg:block"
+          style={{ position: "fixed", top: 0, left: 0, x: px, y: py,
+            zIndex: 80, pointerEvents: "none" }}>
+          <FloatingPreview project={modal ? null : active} />
+        </motion.div>
+      )}
+
+      <AnimatePresence>
+        {modal && <Modal p={modal} onClose={() => setModal(null)} />}
+      </AnimatePresence>
     </section>
   );
 }

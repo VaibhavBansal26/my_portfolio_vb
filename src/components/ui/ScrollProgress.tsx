@@ -1,44 +1,44 @@
 "use client";
-import { useEffect, useState } from "react";
-import { motion, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
+/**
+ * FRIDAY · Scroll progress — pure motion values, zero React re-renders.
+ * Top hairline bar + arc-reactor gauge (bottom-left, desktop).
+ */
 export default function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  const spring = useSpring(progress, { stiffness: 200, damping: 30 });
-
-  useEffect(() => {
-    const onScroll = () => {
-      const el = document.documentElement;
-      const scrolled = el.scrollTop;
-      const total = el.scrollHeight - el.clientHeight;
-      setProgress(total > 0 ? scrolled / total : 0);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
+  const coreOpacity = useTransform(scrollYProgress, [0, 1], [0.25, 1]);
 
   return (
-    <div style={{
-      position: "fixed", top: 0, left: 0, right: 0,
-      height: 2, zIndex: 9999, background: "transparent",
-    }}>
-      {/* Track */}
-      <div style={{ position: "absolute", inset: 0, background: "rgba(232,168,56,.08)" }} />
-      {/* Progress bar */}
-      <motion.div style={{
-        position: "absolute", top: 0, left: 0, bottom: 0,
-        background: "linear-gradient(to right, #e8a838, #f4c96a, #e8a838)",
-        scaleX: spring, transformOrigin: "left",
-        boxShadow: "0 0 8px rgba(232,168,56,.6), 0 0 20px rgba(232,168,56,.2)",
-        width: "100%",
-      }} />
-      {/* Glow dot at tip */}
-      <motion.div style={{
-        position: "absolute", top: -2, width: 6, height: 6,
-        borderRadius: "50%", background: "#e8a838",
-        boxShadow: "0 0 10px #e8a838, 0 0 20px rgba(232,168,56,.5)",
-        left: spring.get() < 1 ? `calc(${progress * 100}% - 3px)` : "calc(100% - 3px)",
-      }} />
-    </div>
+    <>
+      {/* Top hairline */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 2, zIndex: 9999 }}>
+        <motion.div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(to right, var(--accent), var(--reactor))",
+          scaleX, transformOrigin: "left",
+        }} />
+      </div>
+
+      {/* Arc-reactor gauge */}
+      <div className="hidden md:flex" aria-hidden="true" style={{
+        position: "fixed", bottom: 22, left: 22, zIndex: 90,
+        width: 44, height: 44, alignItems: "center", justifyContent: "center",
+        borderRadius: "50%", background: "rgba(10,12,14,.55)", backdropFilter: "blur(8px)",
+        border: "1px solid var(--hud-line)",
+      }}>
+        <svg width="38" height="38" viewBox="0 0 38 38" style={{ transform: "rotate(-90deg)" }}>
+          <circle cx="19" cy="19" r="14" fill="none" stroke="var(--hud-line)" strokeWidth="2" />
+          <motion.circle cx="19" cy="19" r="14" fill="none" stroke="var(--reactor)" strokeWidth="2"
+            strokeLinecap="round" style={{ pathLength: scrollYProgress }} />
+        </svg>
+        <motion.div style={{
+          position: "absolute", width: 8, height: 8, borderRadius: "50%",
+          background: "var(--reactor)", opacity: coreOpacity,
+          boxShadow: "0 0 10px var(--reactor)",
+        }} />
+      </div>
+    </>
   );
 }

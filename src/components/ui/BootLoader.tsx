@@ -2,23 +2,23 @@
 import { useEffect, useRef, useState } from "react";
 
 const LINES = [
-  { text: "E.D.I.T.H SYSTEM v4.2.1",          color: "#e8a838", bold: true  },
-  { text: "EVEN DEAD I'M THE HERO",            color: "rgba(232,168,56,.5)", bold: false },
+  { text: "F.R.I.D.A.Y. SYSTEM v2.0",                              color: "#4fd8eb", bold: true  },
+  { text: "FEMALE REPLACEMENT INTELLIGENT DIGITAL ASSISTANT YOUTH", color: "rgba(79,216,235,.5)", bold: false },
   { text: "",                                   color: "",        bold: false },
-  { text: "INITIALIZING...",                    color: "#e8a838", bold: false },
-  { text: "► Loading core modules",            color: "rgba(232,168,56,.7)", bold: false },
-  { text: "► Connecting to neural network",    color: "rgba(232,168,56,.7)", bold: false },
-  { text: "► Authenticating user identity",   color: "rgba(232,168,56,.7)", bold: false },
+  { text: "INITIALIZING...",                    color: "#4fd8eb", bold: false },
+  { text: "► Loading core modules",            color: "rgba(79,216,235,.7)", bold: false },
+  { text: "► Spinning up neural lattice",      color: "rgba(79,216,235,.7)", bold: false },
+  { text: "► Authenticating user identity",   color: "rgba(79,216,235,.7)", bold: false },
   { text: "",                                   color: "",        bold: false },
   { text: "LOADING VAIBHAV BANSAL...",         color: "#e8a838", bold: true  },
   { text: "► AI Engineer · Software Dev",     color: "rgba(232,168,56,.7)", bold: false },
   { text: "► 5+ years · SUNY Buffalo MS",    color: "rgba(232,168,56,.7)", bold: false },
   { text: "► LangChain · RAG · React · AWS", color: "rgba(232,168,56,.7)", bold: false },
   { text: "",                                   color: "",        bold: false },
-  { text: "████████████████████ 100%",         color: "#e8a838", bold: false },
+  { text: "████████████████████ 100%",         color: "#4fd8eb", bold: false },
   { text: "",                                   color: "",        bold: false },
   { text: "ALL SYSTEMS NOMINAL.",              color: "#34d399", bold: true  },
-  { text: "SYSTEM READY.",                     color: "#34d399", bold: true  },
+  { text: "\"ALL WRAPPED UP HERE, BOSS.\"",    color: "#34d399", bold: true  },
 ];
 
 const INTERVAL   = 160;
@@ -87,25 +87,25 @@ export default function BootLoader() {
         padding:   "0 clamp(28px,10vw,140px)",
         overflow:  "hidden",
         opacity:   fading ? 0 : 1,
-        transition:"opacity 0.8s ease",
+        transition:"opacity 0.8s ease .35s",
         pointerEvents: fading ? "none" : "all",
       }}>
 
         {/* Scanlines */}
         <div style={{ position:"absolute", inset:0, pointerEvents:"none",
-          backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(232,168,56,.018) 3px,rgba(232,168,56,.018) 4px)" }}/>
+          backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(79,216,235,.018) 3px,rgba(79,216,235,.018) 4px)" }}/>
 
         {/* Grid */}
         <div style={{ position:"absolute", inset:0, pointerEvents:"none",
-          backgroundImage:"linear-gradient(rgba(232,168,56,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(232,168,56,.02) 1px,transparent 1px)",
+          backgroundImage:"linear-gradient(rgba(79,216,235,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(79,216,235,.02) 1px,transparent 1px)",
           backgroundSize:"44px 44px" }}/>
 
         {/* Corner brackets */}
         {[
-          { top:20, left:20,   borderTop:"1.5px solid rgba(232,168,56,.4)", borderLeft:"1.5px solid rgba(232,168,56,.4)"   },
-          { top:20, right:20,  borderTop:"1.5px solid rgba(232,168,56,.4)", borderRight:"1.5px solid rgba(232,168,56,.4)"  },
-          { bottom:20, left:20,  borderBottom:"1.5px solid rgba(232,168,56,.4)", borderLeft:"1.5px solid rgba(232,168,56,.4)"  },
-          { bottom:20, right:20, borderBottom:"1.5px solid rgba(232,168,56,.4)", borderRight:"1.5px solid rgba(232,168,56,.4)" },
+          { top:20, left:20,   borderTop:"1.5px solid rgba(79,216,235,.4)", borderLeft:"1.5px solid rgba(79,216,235,.4)"   },
+          { top:20, right:20,  borderTop:"1.5px solid rgba(79,216,235,.4)", borderRight:"1.5px solid rgba(79,216,235,.4)"  },
+          { bottom:20, left:20,  borderBottom:"1.5px solid rgba(79,216,235,.4)", borderLeft:"1.5px solid rgba(79,216,235,.4)"  },
+          { bottom:20, right:20, borderBottom:"1.5px solid rgba(79,216,235,.4)", borderRight:"1.5px solid rgba(79,216,235,.4)" },
         ].map((s, i) => (
           <div key={i} style={{ position:"absolute", width:20, height:20, ...s as React.CSSProperties }}/>
         ))}
@@ -113,7 +113,7 @@ export default function BootLoader() {
         {/* Amber glow */}
         <div style={{ position:"absolute", top:"20%", right:"10%", width:300, height:300,
           borderRadius:"50%", pointerEvents:"none",
-          background:"radial-gradient(circle,rgba(232,168,56,.08) 0%,transparent 65%)" }}/>
+          background:"radial-gradient(circle,rgba(79,216,235,.08) 0%,transparent 65%)" }}/>
 
         {/* Terminal text */}
         <div style={{ position:"relative", zIndex:2, maxWidth:580 }}>
@@ -131,6 +131,7 @@ export default function BootLoader() {
                 minHeight:     line.text ? undefined : "0.6em",
                 animation:     "bl_in .18s ease forwards",
                 textShadow:
+                  line.color === "#4fd8eb" ? "0 0 12px rgba(79,216,235,.5)" :
                   line.color === "#e8a838" ? "0 0 12px rgba(232,168,56,.5)" :
                   line.color === "#34d399" ? "0 0 12px rgba(52,211,153,.5)" :
                   undefined,
@@ -139,7 +140,7 @@ export default function BootLoader() {
                 {isLast && !fading && (
                   <span style={{
                     display:"inline-block", width:9, height:"1em",
-                    background:"#e8a838", marginLeft:5,
+                    background:"#4fd8eb", marginLeft:5,
                     verticalAlign:"text-bottom",
                     animation:"bl_cur .8s step-end infinite",
                   }}/>
@@ -149,12 +150,25 @@ export default function BootLoader() {
           })}
         </div>
 
+        {/* Handoff wordmark — docks toward the navbar logo as the loader fades */}
+        <div aria-hidden style={{
+          position:"absolute", left: fading ? 24 : "50%", top: fading ? 18 : "46%",
+          transform: fading ? "translate(0,0) scale(.32)" : "translate(-50%,-50%) scale(1)",
+          transformOrigin:"top left",
+          transition:"all .7s cubic-bezier(.22,1,.36,1)",
+          fontFamily:"monospace", fontWeight:700, fontSize:34, letterSpacing:".12em",
+          color:"#4fd8eb", textShadow:"0 0 18px rgba(79,216,235,.5)",
+          opacity: shown.length > 2 ? 1 : 0, zIndex: 3, pointerEvents:"none",
+        }}>
+          F.R.I.D.A.Y.
+        </div>
+
         {/* Footer */}
         {shown.length === LINES.length && (
           <div style={{
             position:"absolute", bottom:28, left:0, right:0,
             textAlign:"center", fontFamily:"monospace", fontSize:10,
-            color:"rgba(232,168,56,.35)", letterSpacing:".2em",
+            color:"rgba(79,216,235,.35)", letterSpacing:".2em",
             textTransform:"uppercase", animation:"bl_in .4s ease forwards",
           }}>
             ENTERING PORTFOLIO...

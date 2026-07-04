@@ -1,10 +1,17 @@
 "use client";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiOutlineSun, HiOutlineMoon, HiMenuAlt4, HiX } from "react-icons/hi";
+import { usePersona } from "@/components/ui/usePersona";
+import { setPersona, type Persona } from "@/components/ui/PersonaPicker";
+
+const PERSONA_CYCLE: Persona[] = ["browsing", "recruiter", "engineer"];
+const PERSONA_LABEL: Record<Persona, string> = {
+  browsing: "VISITOR", recruiter: "RECRUITER", engineer: "ENGINEER",
+};
 
 const navLinks = [
   { href: "/",          label: "Home" },
@@ -31,6 +38,9 @@ export default function Navbar() {
 
   const isDark = resolvedTheme === "dark";
   const toggle = () => setTheme(isDark ? "light" : "dark");
+  const persona = usePersona();
+  const cyclePersona = () =>
+    setPersona(PERSONA_CYCLE[(PERSONA_CYCLE.indexOf(persona) + 1) % PERSONA_CYCLE.length]);
 
   return (
     <motion.header
@@ -86,6 +96,20 @@ export default function Navbar() {
 
         {/* Right: theme toggle + mobile menu */}
         <div className="flex items-center gap-3">
+
+          {/* FRIDAY mode — adaptive layout switcher */}
+          {mounted && (
+            <button onClick={cyclePersona} title="FRIDAY adapts the page to who you are — click to switch"
+              className="hidden md:inline-flex items-center gap-2 font-mono text-[9px] tracking-[.2em] uppercase"
+              style={{ padding: "6px 12px", background: "transparent", cursor: "pointer",
+                border: "1px solid var(--hud-line)", color: "var(--reactor-dim)", transition: "all .2s" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--reactor)"; e.currentTarget.style.color = "var(--reactor)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--hud-line)"; e.currentTarget.style.color = "var(--reactor-dim)"; }}>
+              <motion.span animate={{ opacity: [1, .25, 1] }} transition={{ duration: 2, repeat: Infinity }}
+                className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: "var(--reactor)" }} />
+              FRIDAY: {PERSONA_LABEL[persona]}
+            </button>
+          )}
 
           {/* Theme toggle — only shown after mount to avoid hydration mismatch */}
           {mounted && (

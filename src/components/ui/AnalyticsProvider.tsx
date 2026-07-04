@@ -1,11 +1,18 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { track } from "@vercel/analytics";
 
-export default function AnalyticsProvider() {
+function AnalyticsInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  // #24 PWA — register offline shell
+  useEffect(() => {
+    if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+  }, []);
 
   useEffect(() => {
     // Track page view with referrer + UTM data
@@ -33,4 +40,13 @@ export default function AnalyticsProvider() {
   }, [pathname, searchParams]);
 
   return null;
+}
+
+/* useSearchParams must live under a Suspense boundary (Next 14 prerender requirement) */
+export default function AnalyticsProvider() {
+  return (
+    <Suspense fallback={null}>
+      <AnalyticsInner />
+    </Suspense>
+  );
 }

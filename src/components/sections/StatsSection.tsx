@@ -10,6 +10,15 @@ export default function StatsSection() {
     <section ref={ref} className="border-y border-[var(--border)] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: "linear-gradient(to right, transparent, var(--accent-glow), transparent)", opacity: 0.6 }} />
+      {/* FRIDAY · reactor scan sweeps across as the counters run */}
+      {inView && (
+        <motion.div initial={{ left: "-15%" }} animate={{ left: "115%" }}
+          transition={{ duration: 2.2, ease: "easeInOut" }}
+          className="absolute pointer-events-none"
+          style={{ top: 0, bottom: 0, width: "12%",
+            background: "linear-gradient(to right, transparent, var(--hologram), transparent)",
+            borderRight: "1px solid var(--reactor-dim)" }} />
+      )}
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[var(--border)]">
           {stats.map(({ label, value }, i) => (

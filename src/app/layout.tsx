@@ -11,6 +11,15 @@ import PatronusEgg from "@/components/ui/PatronusEgg";
 import AccioEgg from "@/components/ui/AccioEgg";
 import BootLoader from "@/components/ui/BootLoader";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import SmoothScroll from "@/components/ui/SmoothScroll";
+import { BackgroundJourney, Grain } from "@/components/ui/FlowStack";
+import PersonaPicker from "@/components/ui/PersonaPicker";
+import CommandPalette from "@/components/ui/CommandPalette";
+import UITicks from "@/components/ui/UITicks";
+import FridayTour from "@/components/ui/FridayTour";
+import SimulationMode from "@/components/ui/SimulationMode";
+import ProactiveFriday from "@/components/ui/ProactiveFriday";
+import { ViewTransitions } from "next-view-transitions";
 import AmbientSound from "@/components/ui/AmbientSound";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import { Analytics } from "@vercel/analytics/react";
@@ -279,6 +288,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    <ViewTransitions>
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
@@ -408,10 +418,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://github-readme-stats.vercel.app" />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <BackgroundJourney />
+          <Grain />
           <BootLoader />
           <CustomCursor />
           <PatronusEgg />
@@ -419,9 +434,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <EasterEgg />
           <ScrollProgress />
           <Navbar />
-          <main><PageTransition>{children}</PageTransition></main>
+          <SmoothScroll><main><PageTransition>{children}</PageTransition></main></SmoothScroll>
           <Footer />
           <Chatbot />
+          <PersonaPicker />
+          <CommandPalette />
+          <FridayTour />
+          <SimulationMode />
+          <ProactiveFriday />
+          <UITicks />
           <ThemeSwitcher />
           <AmbientSound />
           <Analytics />
@@ -430,5 +451,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </ThemeProvider>
       </body>
     </html>
+    </ViewTransitions>
   );
 }
