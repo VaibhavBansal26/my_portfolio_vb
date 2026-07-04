@@ -1,0 +1,120 @@
+---
+title: "Deploying a Next.js App on Hostinger: Complete Guide"
+date: "2025-05-10"
+description: "Step-by-step guide to deploying a Next.js 14 application on Hostinger's Node.js hosting — including GitHub Actions CI/CD, custom domain setup, and SSL."
+tags: ["Next.js", "Hostinger", "Deployment", "CI/CD", "DevOps"]
+published: true
+---
+
+# Deploying a Next.js App on Hostinger: Complete Guide
+
+After years of relying on Vercel for hosting Next.js apps, I recently moved my portfolio to [Hostinger's Node.js hosting](https://www.hostinger.com/web-apps-hosting/nextjs-hosting). This post walks through the full setup — from GitHub repo to live domain.
+
+## Why Hostinger Over Vercel?
+
+Vercel is excellent but gets expensive fast once you go beyond the hobby tier. Hostinger's Business plan gives you full Node.js support (SSR, API routes, ISR) for a fixed monthly price with no bandwidth overages.
+
+## Prerequisites
+
+- A Next.js 14+ app pushed to GitHub
+- Hostinger Business plan or higher (Node.js is not available on Premium)
+- A domain (GoDaddy, Namecheap, or Hostinger)
+
+## Step 1: Configure `next.config.mjs` for Standalone Output
+
+Hostinger runs your app as a Node.js process. The `standalone` output mode bundles everything needed into `.next/standalone`:
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'standalone',
+  // ... rest of your config
+};
+```
+
+## Step 2: Create the Node.js App in hPanel
+
+1. Log in to [hPanel](https://hpanel.hostinger.com)
+2. Go to **Websites → Node.js**
+3. Click **Create New App**
+4. Set:
+   - **Node.js version:** 20 LTS
+   - **Build command:** `npm install && npm run build`
+   - **Start command:** `node server.js`
+
+## Step 3: Connect Your GitHub Repository
+
+In hPanel → Node.js app → **GitHub integration**:
+
+1. Authorize Hostinger to read your repos
+2. Select your repository and `main` branch
+3. Enable **Auto-deploy on push**
+
+Every push to `main` now triggers a fresh build and restart.
+
+## Step 4: Add Environment Variables
+
+In hPanel → **Environment Variables**, add:
+
+```
+NODE_ENV=production
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+GITHUB_TOKEN=ghp_xxxx   # for GitHub Stats API
+```
+
+## Step 5: GitHub Actions for CI Before Deploy
+
+Add a `.github/workflows/ci.yml` to run lint and type checks on every PR before code merges to `main`:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm run build
+```
+
+## Step 6: Connect Your Domain
+
+### Option A — Point nameservers to Hostinger
+
+In GoDaddy (or your registrar), set nameservers to Hostinger's (found in hPanel → Domains). This lets Hostinger manage DNS and handle SSL automatically.
+
+### Option B — Keep DNS at GoDaddy
+
+Get your server IP from hPanel and add an `A` record in GoDaddy pointing `@` to it. Then install Let's Encrypt SSL in hPanel → SSL.
+
+## Step 7: Verify Everything
+
+```bash
+# Test your live endpoints
+curl https://yourdomain.com/sitemap.xml
+curl https://yourdomain.com/robots.txt
+curl https://yourdomain.com/api/github-stats
+```
+
+Run a Lighthouse audit with:
+
+```bash
+npx lighthouse https://yourdomain.com --view
+```
+
+Aim for Performance ≥ 85, SEO ≥ 90, Accessibility ≥ 90.
+
+## Conclusion
+
+Hostinger's managed Node.js hosting is a solid Vercel alternative for production Next.js apps. You get SSR, API routes, automatic deployments from GitHub, and global CDN — all at a predictable price.
+
+---
+
+*Have questions about the setup? Drop a comment or connect with me on [LinkedIn](https://www.linkedin.com/in/vaibhavbansal-profile/).*

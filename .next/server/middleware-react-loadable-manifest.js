@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"components/sections/SkillsPreview.tsx -> @/components/three/SkillSphere":{"id":6404,"files":["static/chunks/180.5af9ce9b6573a0bd.js"]}}';

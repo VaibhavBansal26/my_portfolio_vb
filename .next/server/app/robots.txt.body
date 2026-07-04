@@ -1,0 +1,13 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+User-Agent: GPTBot
+User-Agent: ChatGPT-User
+User-Agent: Google-Extended
+User-Agent: PerplexityBot
+Allow: /
+
+Host: https://www.thevaibhavbansal.com
+Sitemap: https://www.thevaibhavbansal.com/sitemap.xml

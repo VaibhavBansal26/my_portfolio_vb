@@ -1,0 +1,90 @@
+---
+title: "MLOps: Taking ML Models from Notebook to Production"
+date: "2024-09-20"
+description: "Practical guide to MLOps — model versioning, experiment tracking with MLflow, CI/CD for ML, and monitoring production models."
+tags: ["MLOps", "MLflow", "Docker", "Python", "Machine Learning"]
+published: true
+---
+
+# MLOps: Taking ML Models from Notebook to Production
+
+Most ML engineers are great at training models. Far fewer know how to **deploy and maintain** them reliably. MLOps bridges this gap.
+
+## Why MLOps Matters
+
+A model rotting in a Jupyter notebook helps nobody. The real challenge is:
+
+- **Reproducibility** — can you recreate the exact model that's in production?
+- **Monitoring** — how do you know when model performance degrades?
+- **Iteration** — how quickly can you ship improvements?
+
+## Experiment Tracking with MLflow
+
+```python
+import mlflow
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, f1_score
+
+mlflow.set_experiment("heart-disease-prediction")
+
+with mlflow.start_run():
+    # Log parameters
+    params = {"n_estimators": 100, "max_depth": 8}
+    mlflow.log_params(params)
+    
+    # Train
+    model = RandomForestClassifier(**params)
+    model.fit(X_train, y_train)
+    
+    # Log metrics
+    preds = model.predict(X_test)
+    mlflow.log_metric("accuracy", accuracy_score(y_test, preds))
+    mlflow.log_metric("f1_score", f1_score(y_test, preds))
+    
+    # Log model
+    mlflow.sklearn.log_model(model, "model")
+```
+
+## Dockerizing Your ML Service
+
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+## FastAPI Serving
+
+```python
+from fastapi import FastAPI
+import mlflow.pyfunc
+import pandas as pd
+
+app = FastAPI()
+model = mlflow.pyfunc.load_model("models:/heart-disease-classifier/production")
+
+@app.post("/predict")
+async def predict(features: dict):
+    df = pd.DataFrame([features])
+    prediction = model.predict(df)
+    return {"prediction": int(prediction[0]), "probability": float(prediction[1])}
+```
+
+## Key Takeaways
+
+1. **Track everything** — use MLflow from day one
+2. **Containerize** — Docker makes deployment environment-agnostic  
+3. **Monitor** — set up alerts for data drift and performance degradation
+4. **Automate** — CI/CD for ML is just as important as for software
+
+---
+
+*Building something similar? Let's connect on [LinkedIn](https://www.linkedin.com/in/vaibhavbansal-profile).*
