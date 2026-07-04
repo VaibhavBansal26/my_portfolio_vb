@@ -7,7 +7,7 @@ import FullSkillsSection from "@/components/sections/FullSkillsSection";
 import CertFlipCards from "@/components/ui/CertFlipCards";
 import ResearchSection from "@/components/sections/ResearchSection";
 import LeetCodeStats from "@/components/sections/LeetCodeStats";
-import GitHubStats from "@/components/sections/GitHubStats";
+// import GitHubStats from "@/components/sections/GitHubStats"; // TODO: set up GitHub token first
 
 export const metadata: Metadata = {
   title: "About — AI Engineer & Software Developer",
@@ -16,7 +16,12 @@ export const metadata: Metadata = {
   keywords: [
     "Vaibhav Bansal AI engineer", "AI engineer United States", "software engineer background",
     "LangChain engineer", "RAG developer", "LLM specialist", "machine learning engineer US",
-    "full stack AI developer", "hire AI engineer", "senior software engineer",
+    "full stack AI developer", "hire AI engineer", "senior software engineer", "Software developer with AI expertise", "AI consultant US", "data science background", "M.S. Data Science", "ex-Wipro AI engineer", "ex-DashClicks AI developer", "AI research assistant",
+    "python developer", "react developer", "node.js developer", "typescript developer", "aws developer", "azure developer",
+    "hire AI engineer", "hire AI engineer United States", "hire LangChain developer",
+    "hire RAG engineer", "hire LLM developer", "hire machine learning engineer US",
+    "hire full stack developer United States", "hire Python developer",
+    "hire React developer", "hire Node.js developer", "hire TypeScript developer",
   ],
   openGraph: {
     title: "About Vaibhav Bansal | AI Engineer — United States",
@@ -36,7 +41,7 @@ export default function AboutPage() {
       <CertFlipCards />
       <ResearchSection />
       <LeetCodeStats />
-      <GitHubStats />
+      {/* <GitHubStats /> */}
     </>
   );
 }
