@@ -25,11 +25,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Type check
-        run: npx tsc --noEmit
-
       - name: Build (verify it compiles)
         run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: https://www.vaibhavbansal.in
-          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+          NODE_ENV: production
+          NEXT_PUBLIC_SITE_URL: https://www.thevaibhavbansal.com

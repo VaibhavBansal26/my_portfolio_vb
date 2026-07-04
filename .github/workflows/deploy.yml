@@ -1,17 +1,14 @@
-name: Build & Deploy to Hostinger
+name: Build and Push to build branch
 
 on:
   push:
-    branches: [main]
-
-concurrency:
-  group: deploy-production
-  cancel-in-progress: true
+    branches:
+      - main
 
 jobs:
-  deploy:
-    name: Build & Deploy
+  build:
     runs-on: ubuntu-latest
+    name: Build and Push
 
     steps:
       - name: Checkout
@@ -20,8 +17,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -31,24 +28,14 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Prepare standalone bundle
+      - name: Prepare output
         run: |
           cp -r public .next/standalone/public
           cp -r .next/static .next/standalone/.next/static
 
-      - name: Deploy to Hostinger via SSH
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Push build to branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          host: ${{ secrets.HOSTINGER_SSH_HOST }}
-          username: ${{ secrets.HOSTINGER_SSH_USER }}
-          password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
-          port: 65002
-          script: |
-            set -e
-            cd ${{ secrets.HOSTINGER_APP_PATH }}
-            git pull origin main
-            npm ci --omit=dev
-            npm run build
-            cp -r public .next/standalone/public 2>/dev/null || true
-            cp -r .next/static .next/standalone/.next/static 2>/dev/null || true
-            echo "✓ Deployment complete"
+          publish_dir: .next/standalone
+          publish_branch: build
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,8 +1,7 @@
 name: Lighthouse CI
 
 on:
-  pull_request:
-    branches: [main]
+  workflow_dispatch: # manual trigger only — enable when site is live
 
 jobs:
   lighthouse:
@@ -23,7 +22,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: https://www.vaibhavbansal.in
+          NEXT_PUBLIC_SITE_URL: https://www.thevaibhavbansal.com
 
       - name: Start server
         run: npm start &
