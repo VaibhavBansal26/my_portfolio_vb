@@ -7,7 +7,7 @@ export const personal = {
   bio: "Software Engineer and AI Engineer with 5+ years of experience building scalable applications and AI-powered systems. M.S. in Engineering Science & Data Science from SUNY Buffalo. Experienced in architecting production-grade platforms using Python, Java, React, Docker, AWS, and cloud-native technologies.",
   location: "United States",
   email: "vaibhav.bansal945@gmail.com",
-  website: "https://www.vaibhavbansal.in",
+  website: "https://www.thevaibhavbansal.com",
   github: "https://www.github.com/VaibhavBansal26",
   linkedin: "https://www.linkedin.com/in/vaibhavbansal-profile/",
   leetcode: "https://www.leetcode.com/vaibhav_bansal26",

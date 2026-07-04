@@ -26,7 +26,7 @@ import { Analytics } from "@vercel/analytics/react";
 import AnalyticsProvider from "@/components/ui/AnalyticsProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const BASE_URL = "https://www.vaibhavbansal.in";
+const BASE_URL = "https://www.thevaibhavbansal.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

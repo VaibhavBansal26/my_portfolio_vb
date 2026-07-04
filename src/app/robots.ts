@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://www.vaibhavbansal.in/sitemap.xml",
-    host: "https://www.vaibhavbansal.in",
+    sitemap: "https://www.thevaibhavbansal.com/sitemap.xml",
+    host: "https://www.thevaibhavbansal.com",
   };
 }
