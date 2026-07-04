@@ -1,0 +1,35 @@
+name: CI — Lint, Type Check & Build
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches-ignore: [main]
+
+jobs:
+  ci:
+    name: CI Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build (verify it compiles)
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://www.vaibhavbansal.in
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}

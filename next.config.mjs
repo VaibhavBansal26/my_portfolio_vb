@@ -1,5 +1,10 @@
 import createMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const withMDX = createMDX({
   options: {
@@ -23,6 +28,10 @@ const nextConfig = {
       { protocol: 'https', hostname: 'i.ytimg.com' },
       { protocol: 'https', hostname: 'img.youtube.com' },
     ],
+  },
+  webpack(config) {
+    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
+    return config;
   },
   async headers() {
     return [
