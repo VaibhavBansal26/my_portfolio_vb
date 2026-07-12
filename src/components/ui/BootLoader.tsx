@@ -35,6 +35,11 @@ export default function BootLoader() {
 
   useEffect(() => {
     // Check session — only runs on client
+    const skipBoot = window.location.search.includes("skipBoot=1");
+    if (skipBoot) {
+      setVisible(false);
+      return;
+    }
     const forceShow = window.location.search.includes("boot=1");
     let booted = false;
     try { booted = !forceShow && !!sessionStorage.getItem("vb_booted2"); } catch {}

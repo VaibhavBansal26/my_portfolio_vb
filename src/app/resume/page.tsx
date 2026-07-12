@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import ResumeView from "@/components/sections/ResumeView";
 
 export const metadata: Metadata = {
-  title: "Resume",
+  title: "Resume — AI Engineer & Software Developer",
   description: "Resume of Vaibhav Bansal — Software Engineer & AI Engineer. 5+ years experience. Python, React, AWS, LLMs, Docker.",
+  alternates: { canonical: "https://www.thevaibhavbansal.com/resume" },
+  openGraph: {
+    title: "Resume — Vaibhav Bansal, AI Engineer & Software Developer",
+    description: "5+ years experience. Python, React, AWS, LLMs, Docker. M.S. Data Science, SUNY Buffalo.",
+    url: "https://www.thevaibhavbansal.com/resume",
+    type: "profile",
+  },
 };
 
 export default function ResumePage() {

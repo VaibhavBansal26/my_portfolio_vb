@@ -16,7 +16,7 @@ Key facts about Vaibhav:
 - LinkedIn: linkedin.com/in/vaibhavbansal-profile
 - Medium blog: medium.com/@vaibhav.bansal945
 - Email: vaibhav.bansal945@gmail.com
-- Website: vaibhavbansal.in
+- Website: thevaibhavbansal.com
 - Open to new opportunities in software engineering and AI
 
 Top projects:

@@ -60,7 +60,7 @@ export default function AboutHero() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            vaibhavbansal.in
+            thevaibhavbansal.com
           </Link>
         </motion.div>
 

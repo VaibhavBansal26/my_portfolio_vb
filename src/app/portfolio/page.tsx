@@ -10,10 +10,11 @@ export const metadata: Metadata = {
     "machine learning projects","data engineering portfolio","open source npm","React projects",
     "Next.js portfolio","Python AI projects","disaster response AI","MLOps pipeline",
   ],
+  alternates: { canonical: "https://www.thevaibhavbansal.com/portfolio" },
   openGraph: {
     title: "Portfolio | Vaibhav Bansal",
     description: "AI systems · LLM apps · Full-stack · Data engineering · Open source. 40+ projects shipped.",
-    url: "https://www.vaibhavbansal.in/portfolio",
+    url: "https://www.thevaibhavbansal.com/portfolio",
   },
 };
 

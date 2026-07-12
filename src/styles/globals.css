@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -45,6 +46,180 @@ html.light {
   --reactor-dim:  rgba(8,145,178,.5);
   --hud-line:     rgba(8,145,178,.15);
   --hologram:     rgba(8,145,178,.05);
+}
+
+/* CINEMA — Director's Cut */
+html.studio {
+  --bg:           #090707;
+  --bg-secondary: #120909;
+  --bg-card:      #160b0c;
+  --text:         #f4eee9;
+  --text-muted:   #9d8581;
+  --border:       #301719;
+  --border-bright:#5a2524;
+  --accent:       #ef3d35;
+  --surface:      #180c0d;
+  --reactor:      #ff9f6e;
+  --reactor-dim:  rgba(255,159,110,.48);
+  --hud-line:     rgba(239,61,53,.2);
+  --hologram:     rgba(239,61,53,.08);
+  --hero-ol-l:    rgba(9,7,7,.96);
+  --hero-ol-m:    rgba(9,7,7,.77);
+  --hero-ol-r:    rgba(35,7,7,.5);
+}
+
+/* ARCANE — wand light, cloak shadow, portal gold */
+html.arcane {
+  --bg:           #07111f;
+  --bg-secondary: #0b1728;
+  --bg-card:      #0e1b2d;
+  --text:         #f2e9d5;
+  --text-muted:   #9aa6b5;
+  --border:       #24364b;
+  --border-bright:#52677b;
+  --accent:       #d8b46b;
+  --surface:      #0d1b2b;
+  --reactor:      #86b7da;
+  --reactor-dim:  rgba(134,183,218,.46);
+  --hud-line:     rgba(216,180,107,.18);
+  --hologram:     rgba(134,183,218,.07);
+  --hero-ol-l:    rgba(7,17,31,.96);
+  --hero-ol-m:    rgba(7,17,31,.75);
+  --hero-ol-r:    rgba(7,17,31,.48);
+}
+
+/* KINGDOMS — cold steel with controlled fire */
+html.kingdoms {
+  --bg:           #080c12;
+  --bg-secondary: #0d141c;
+  --bg-card:      #111922;
+  --text:         #edf1f5;
+  --text-muted:   #8c9aa8;
+  --border:       #26323e;
+  --border-bright:#4b5e70;
+  --accent:       #c7d0dc;
+  --surface:      #111922;
+  --reactor:      #79b9d7;
+  --reactor-dim:  rgba(121,185,215,.45);
+  --hud-line:     rgba(199,208,220,.17);
+  --hologram:     rgba(121,185,215,.06);
+  --hero-ol-l:    rgba(8,12,18,.97);
+  --hero-ol-m:    rgba(8,12,18,.76);
+  --hero-ol-r:    rgba(21,16,16,.48);
+}
+
+/* ARMOR PROTOCOL — red/gold suit with cyan assistant chrome */
+html.ironman {
+  --bg:           #0b0808;
+  --bg-secondary: #150b0a;
+  --bg-card:      #180d0c;
+  --text:         #f4eee5;
+  --text-muted:   #a28d80;
+  --border:       #38201b;
+  --border-bright:#6e3a27;
+  --accent:       #e6a83a;
+  --surface:      #1b0e0d;
+  --reactor:      #52d8eb;
+  --reactor-dim:  rgba(82,216,235,.5);
+  --hud-line:     rgba(82,216,235,.18);
+  --hologram:     rgba(82,216,235,.07);
+  --hero-ol-l:    rgba(11,8,8,.96);
+  --hero-ol-m:    rgba(11,8,8,.76);
+  --hero-ol-r:    rgba(44,12,8,.5);
+}
+
+/* NEURAL FIELD — separate from the powered-armor atmosphere */
+html.ai {
+  --bg:           #030b0f;
+  --bg-secondary: #061218;
+  --bg-card:      #071820;
+  --text:         #e6f5f5;
+  --text-muted:   #75949a;
+  --border:       #14313a;
+  --border-bright:#255461;
+  --accent:       #5eead4;
+  --surface:      #081a21;
+  --reactor:      #38bdf8;
+  --reactor-dim:  rgba(56,189,248,.48);
+  --hud-line:     rgba(94,234,212,.17);
+  --hologram:     rgba(56,189,248,.07);
+  --hero-ol-l:    rgba(3,11,15,.97);
+  --hero-ol-m:    rgba(3,11,15,.76);
+  --hero-ol-r:    rgba(3,22,29,.48);
+}
+
+/* SWISS — International Typographic Style: paper, ink, one red */
+html.swiss {
+  --font-display: 'Switzer', 'Inter', system-ui, sans-serif;
+  --font-body:    'Switzer', 'Inter', system-ui, sans-serif;
+  --bg:           #f5f4f0;
+  --bg-secondary: #efeee9;
+  --bg-card:      #fbfaf7;
+  --text:         #101010;
+  --text-muted:   #6b6a64;
+  --border:       #d8d6cf;
+  --border-bright:#101010;
+  --accent:       #e2261f;
+  --surface:      #fbfaf7;
+  --reactor:      #101010;
+  --reactor-dim:  rgba(16,16,16,.22);
+  --hud-line:     rgba(16,16,16,.1);
+  --hologram:     rgba(16,16,16,.04);
+  --hero-ol-l:    rgba(245,244,240,.97);
+  --hero-ol-m:    rgba(245,244,240,.82);
+  --hero-ol-r:    rgba(245,244,240,.6);
+  /* Overrides for components with hardcoded gold — every other theme
+     falls back to the original values, so only Swiss is affected */
+  --hard-accent:          #e2261f;
+  --hard-accent-2:        #e2261f;
+  --hard-accent-contrast: #fbfaf7;
+  --hard-accent-soft:     rgba(226,38,31,.5);
+  --hard-glow:            none;
+}
+
+/* ONYX — dark immersive: kinetic type, violet→cyan light */
+html.onyx {
+  --bg:           #06060a;
+  --bg-secondary: #0a0a12;
+  --bg-card:      #0d0d16;
+  --text:         #f2f2f7;
+  --text-muted:   #8b8b9e;
+  --border:       #1c1c2a;
+  --border-bright:#34344c;
+  --accent:       #a78bfa;
+  --surface:      #0d0d16;
+  --reactor:      #22d3ee;
+  --reactor-dim:  rgba(34,211,238,.45);
+  --hud-line:     rgba(167,139,250,.16);
+  --hologram:     rgba(34,211,238,.06);
+  --hero-ol-l:    rgba(6,6,10,.96);
+  --hero-ol-m:    rgba(6,6,10,.76);
+  --hero-ol-r:    rgba(13,10,26,.5);
+  --hard-accent:          #a78bfa;
+  --hard-accent-2:        #22d3ee;
+  --hard-accent-contrast: #06060a;
+  --hard-accent-soft:     rgba(167,139,250,.4);
+  --hard-glow:            0 0 8px rgba(167,139,250,.7);
+}
+
+/* AURORA — polar night, drifting northern lights */
+html.aurora {
+  --bg:           #050d14;
+  --bg-secondary: #081420;
+  --bg-card:      #0a1826;
+  --text:         #eaf6f0;
+  --text-muted:   #7d95a3;
+  --border:       #16303f;
+  --border-bright:#2c5a6b;
+  --accent:       #4ade9d;
+  --surface:      #0a1a28;
+  --reactor:      #a78bfa;
+  --reactor-dim:  rgba(167,139,250,.46);
+  --hud-line:     rgba(74,222,157,.16);
+  --hologram:     rgba(167,139,250,.07);
+  --hero-ol-l:    rgba(5,13,20,.96);
+  --hero-ol-m:    rgba(5,13,20,.75);
+  --hero-ol-r:    rgba(8,26,32,.5);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -284,8 +459,640 @@ html[data-daypart="evening"] .vb-journey { filter: hue-rotate(6deg) saturate(1.1
 }
 .vb-cmd-item[data-selected="true"] { background: var(--hologram); color: var(--text); }
 
+/* ═══════════ ATMOSPHERE CHOOSER ═══════════ */
+.atmosphere-trigger {
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid var(--hud-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 74%, transparent);
+  color: var(--reactor);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+  transition: border-color .2s, background-color .2s, color .2s;
+}
+.atmosphere-trigger:hover {
+  border-color: var(--reactor-dim);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+}
+
+.atmosphere-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9996;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(2, 4, 7, .74);
+  backdrop-filter: blur(18px);
+}
+.atmosphere-dialog {
+  width: min(900px, 100%);
+  max-height: min(760px, calc(100vh - 48px));
+  overflow: auto;
+  padding: 26px;
+  border: 1px solid var(--border-bright);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--bg-card) 96%, transparent), color-mix(in srgb, var(--bg) 94%, transparent));
+  box-shadow: 0 30px 100px rgba(0,0,0,.5), 0 0 42px var(--hologram);
+}
+.atmosphere-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 4px 4px 22px;
+}
+.atmosphere-kicker {
+  color: var(--reactor);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+.atmosphere-dialog h2 {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+.atmosphere-dialog p {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.atmosphere-close {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.atmosphere-close:hover { color: var(--text); border-color: var(--border-bright); }
+.atmosphere-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.atmosphere-option {
+  position: relative;
+  min-height: 130px;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 74%, transparent);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .2s, border-color .2s, background-color .2s;
+}
+.atmosphere-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-bright);
+  background: var(--surface);
+}
+.atmosphere-option.is-selected {
+  border-color: var(--reactor-dim);
+  box-shadow: inset 0 0 0 1px var(--hud-line);
+}
+.atmosphere-option__icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--hud-line);
+  border-radius: 14px;
+  color: var(--reactor);
+  font-size: 23px;
+  background: var(--hologram);
+}
+.atmosphere-option__copy { min-width: 0; display: flex; flex-direction: column; }
+.atmosphere-option__copy small {
+  color: var(--reactor-dim);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.atmosphere-option__copy strong {
+  margin-top: 3px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  line-height: 1.15;
+}
+.atmosphere-option__copy > span {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.atmosphere-option__swatches {
+  position: absolute;
+  left: 82px;
+  bottom: 16px;
+  display: flex;
+  gap: 5px;
+}
+.atmosphere-option__swatches i {
+  width: 16px;
+  height: 4px;
+  border-radius: 99px;
+}
+.atmosphere-option__check {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: var(--reactor);
+}
+
+/* Theme props are real icons from react-icons, kept at the scene edges. */
+.theme-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+.theme-decor--ironman { z-index: 0; }
+.theme-scene {
+  position: absolute;
+  inset: -5vh -3vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: .46;
+  filter: saturate(.86) contrast(1.04);
+  mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,.9) 68%, transparent 100%);
+}
+.theme-decor--studio .theme-scene { background-image: url("/themes/studio.webp"); opacity: .48; }
+.theme-decor--arcane .theme-scene { background-image: url("/themes/arcane.webp"); opacity: .5; }
+.theme-decor--kingdoms .theme-scene { background-image: url("/themes/kingdoms.webp"); opacity: .46; }
+.theme-decor--ironman .theme-scene {
+  background-image: none;
+  background:
+    radial-gradient(circle at 82% 60%, rgba(37,150,169,.16), transparent 28%),
+    linear-gradient(105deg, transparent 50%, rgba(63,18,12,.18));
+  opacity: 1;
+}
+.theme-decor--ai .theme-scene { background-image: url("/themes/ai.webp"); opacity: .5; }
+.theme-decor--aurora .theme-scene {
+  background-image: none;
+  background:
+    radial-gradient(ellipse at 68% -12%, rgba(74,222,157,.18), transparent 52%),
+    radial-gradient(ellipse at 22% -4%, rgba(167,139,250,.14), transparent 48%);
+  opacity: 1;
+  mask-image: none;
+}
+.theme-aurora-ribbon {
+  position: absolute;
+  top: -18vh;
+  width: 130vw;
+  left: -15vw;
+  height: 56vh;
+  filter: blur(42px) saturate(1.2);
+  opacity: .38;
+  transform-origin: center top;
+  will-change: transform;
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+}
+.theme-aurora-ribbon--one {
+  background: linear-gradient(100deg,
+    transparent 8%,
+    rgba(74,222,157,.5) 30%,
+    rgba(56,189,248,.32) 52%,
+    rgba(167,139,250,.42) 72%,
+    transparent 94%);
+}
+.theme-aurora-ribbon--two {
+  top: -8vh;
+  height: 44vh;
+  opacity: .26;
+  animation-duration: 34s;
+  animation-delay: -12s;
+  background: linear-gradient(82deg,
+    transparent 12%,
+    rgba(167,139,250,.44) 36%,
+    rgba(74,222,157,.36) 60%,
+    rgba(56,189,248,.3) 80%,
+    transparent 96%);
+}
+@keyframes aurora-drift {
+  0%   { transform: translateX(-4vw) skewY(-4deg) scaleY(1); }
+  50%  { transform: translateX(3vw)  skewY(2deg)  scaleY(1.18); }
+  100% { transform: translateX(6vw)  skewY(-2deg) scaleY(.94); }
+}
+.theme-aurora-stars {
+  position: absolute;
+  inset: 0;
+  opacity: .5;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(234,246,240,.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 28% 8%,  rgba(234,246,240,.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 41% 24%, rgba(234,246,240,.75) 0 1px, transparent 2px),
+    radial-gradient(circle at 57% 12%, rgba(234,246,240,.55) 0 1px, transparent 2px),
+    radial-gradient(circle at 69% 28%, rgba(234,246,240,.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 83% 9%,  rgba(234,246,240,.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 93% 21%, rgba(234,246,240,.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 20% 38%, rgba(234,246,240,.45) 0 1px, transparent 2px),
+    radial-gradient(circle at 76% 41%, rgba(234,246,240,.5) 0 1px, transparent 2px);
+  mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,.7) 55%, transparent 85%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-aurora-ribbon { animation: none; }
+}
+.theme-armor-frame {
+  position: absolute;
+  top: -5vh;
+  right: -3vw;
+  bottom: -5vh;
+  left: -3vw;
+  filter: saturate(.9) contrast(1.04) brightness(.9) drop-shadow(-12px 0 28px rgba(82,216,235,.09));
+  transform-origin: right bottom;
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0,0,0,.3) 50%, rgba(0,0,0,.82) 64%, black 74%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0,0,0,.3) 50%, rgba(0,0,0,.82) 64%, black 74%);
+  will-change: transform, opacity;
+}
+.theme-armor-frame--side {
+  background: url("/themes/ironman.webp") center / cover no-repeat;
+}
+.theme-armor-frame--front {
+  background: url("/themes/ironman-front.webp") center / cover no-repeat;
+}
+.theme-prop {
+  position: absolute;
+  color: var(--reactor);
+  opacity: .06;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 24px var(--reactor-dim));
+}
+.theme-prop svg { width: clamp(150px, 22vw, 360px); height: auto; }
+.theme-prop--left { left: -7vw; top: 58vh; }
+.theme-prop--right { right: -5vw; top: 20vh; }
+.theme-prop--reactor { opacity: .17; }
+.theme-decor--studio .theme-prop,
+.theme-decor--kingdoms .theme-prop,
+.theme-decor--ironman .theme-prop { opacity: .07; }
+.theme-sigil {
+  position: absolute;
+  right: 8vw;
+  top: 18vh;
+  color: var(--accent);
+  opacity: .08;
+  filter: drop-shadow(0 0 34px var(--reactor-dim));
+}
+.theme-sigil svg { width: min(32vw, 430px); height: auto; }
+.theme-light-beam {
+  position: absolute;
+  top: -20vh;
+  width: 24vw;
+  height: 120vh;
+  background: linear-gradient(to bottom, rgba(255,132,101,.16), transparent 72%);
+  filter: blur(18px);
+  transform-origin: top center;
+  opacity: .45;
+}
+.theme-light-beam--one { left: 7vw; transform: rotate(-19deg); }
+.theme-light-beam--two { right: 4vw; transform: rotate(21deg); }
+.theme-telemetry {
+  position: absolute;
+  right: 4vw;
+  bottom: 8vh;
+  display: grid;
+  gap: 8px;
+  color: var(--reactor);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: .22em;
+  opacity: .28;
+}
+.theme-neural-grid {
+  position: absolute;
+  inset: 0;
+  opacity: .18;
+  background-image:
+    linear-gradient(var(--hud-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hud-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at 62% 34%, black, transparent 72%);
+}
+.theme-embers {
+  position: absolute;
+  inset: 0;
+  opacity: .34;
+  background-image:
+    radial-gradient(circle at 12% 78%, rgba(239,107,48,.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 26% 69%, rgba(239,107,48,.55) 0 1px, transparent 2px),
+    radial-gradient(circle at 84% 82%, rgba(239,107,48,.65) 0 1px, transparent 2px);
+  background-size: 170px 220px, 230px 190px, 190px 260px;
+}
+.theme-snow,
+.theme-candles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.theme-snow span {
+  position: absolute;
+  top: -12vh;
+  color: rgba(220,239,250,.72);
+  filter: drop-shadow(0 0 5px rgba(142,211,244,.45));
+}
+.theme-candles span {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  color: #ffd78a;
+  filter: drop-shadow(0 0 8px rgba(255,187,74,.8));
+}
+.theme-candles span::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,190,88,.18), transparent 68%);
+}
+
+/* Armor Protocol keyboard reveal — type IRONMAN to launch the résumé. */
+.iron-resume-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9996;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow: hidden;
+  background: rgba(3,5,7,.66);
+  backdrop-filter: blur(14px);
+}
+.iron-resume-trail {
+  position: absolute;
+  left: 0;
+  top: 48%;
+  width: 42vw;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--reactor), #fff, transparent);
+  box-shadow: 0 0 24px var(--reactor), 0 0 60px var(--reactor-dim);
+}
+.iron-resume-panel {
+  position: relative;
+  width: min(720px, 100%);
+  padding: clamp(28px, 5vw, 58px);
+  border: 1px solid var(--reactor-dim);
+  border-radius: 8px 30px 8px 30px;
+  background: linear-gradient(135deg, rgba(27,11,9,.98), rgba(7,20,24,.98));
+  color: var(--text);
+  box-shadow: 0 34px 100px rgba(0,0,0,.62), inset 0 0 52px rgba(82,216,235,.035);
+}
+.iron-resume-panel::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid var(--hud-line);
+  border-radius: 4px 22px 4px 22px;
+  pointer-events: none;
+}
+.iron-resume-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--hud-line);
+  border-radius: 50%;
+  background: var(--hologram);
+  color: var(--reactor);
+  cursor: pointer;
+}
+.iron-resume-kicker {
+  color: var(--reactor);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .22em;
+}
+.iron-resume-panel h2 {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(42px, 7vw, 72px);
+  line-height: .95;
+  letter-spacing: -.055em;
+}
+.iron-resume-role {
+  margin-top: 14px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.iron-resume-summary {
+  max-width: 54ch;
+  margin-top: 24px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+.iron-resume-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 28px;
+  padding: 18px 0;
+  border-block: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.iron-resume-stats strong {
+  color: var(--text);
+  font-size: 18px;
+  margin-right: 4px;
+}
+.iron-resume-action {
+  width: fit-content;
+  margin-top: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  background: var(--accent);
+  color: #080808;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .atmosphere-backdrop { padding: 12px; place-items: end center; }
+  .atmosphere-dialog {
+    width: 100%;
+    max-height: calc(100vh - 24px);
+    padding: 20px 16px;
+    border-radius: 22px;
+  }
+  .atmosphere-grid { grid-template-columns: 1fr; }
+  .atmosphere-option { min-height: 118px; padding: 16px; }
+  .theme-prop { opacity: .05; }
+  .theme-prop svg { width: 200px; }
+  .theme-scene {
+    inset: -3vh -36vw;
+    background-position: 62% center;
+    opacity: .34 !important;
+  }
+  .theme-armor-frame {
+    inset: -3vh -45vw;
+    background-position: 74% center;
+  }
+  .theme-telemetry { display: none; }
+  .theme-snow span:nth-child(even),
+  .theme-candles span:nth-child(even) { display: none; }
+  .iron-resume-backdrop { padding: 12px; }
+  .iron-resume-panel { padding: 34px 24px 28px; }
+  .iron-resume-stats { gap: 12px; }
+}
+
 /* View Transitions — soft cross-fade with slight rise */
 ::view-transition-old(root) { animation: vt-out .28s ease both; }
 ::view-transition-new(root) { animation: vt-in .34s ease both; }
 @keyframes vt-out { to { opacity: 0; transform: translateY(-8px); } }
 @keyframes vt-in  { from { opacity: 0; transform: translateY(10px); } }
+
+/* ============================================================
+   SWISS EDITORIAL — a complete restyle, not a palette swap.
+   Everything here is scoped to html.swiss; no other theme is
+   affected. Rules: paper, ink, hairlines, grotesk type, sharp
+   corners, monochrome photography, exactly one red.
+   ============================================================ */
+
+/* Sharp geometry — the international style has no rounded corners */
+html.swiss *,
+html.swiss *::before,
+html.swiss *::after { border-radius: 0 !important; }
+
+/* Typography — tight grotesk, generous scale, no decoration */
+html.swiss body { letter-spacing: -0.006em; }
+html.swiss h1, html.swiss h2, html.swiss h3 {
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+html.swiss .font-display { letter-spacing: -0.03em; }
+
+/* Ink & red replace gold & cyan in every hardcoded spot */
+html.swiss ::selection { background: #e2261f; color: #fbfaf7; }
+html.swiss ::-webkit-scrollbar { width: 6px; }
+html.swiss ::-webkit-scrollbar-track { background: #f5f4f0; }
+html.swiss ::-webkit-scrollbar-thumb { background: #101010; }
+html.swiss .custom-cursor { background: #e2261f; box-shadow: none; }
+html.swiss .cursor-ring { border-color: #101010; opacity: .5; }
+
+html.swiss .gradient-text {
+  background: none;
+  -webkit-text-fill-color: #e2261f;
+  background-clip: unset;
+  color: #e2261f;
+}
+html.swiss .section-label {
+  color: #e2261f;
+  letter-spacing: .42em;
+  font-weight: 500;
+}
+html.swiss .hover-underline::after { background: #e2261f; height: 2px; }
+
+/* Flat surfaces — kill glows, lifts, and film grain */
+html.swiss .vb-grain { display: none; }
+html.swiss .card-glow:hover {
+  border-color: #101010 !important;
+  box-shadow: none;
+  transform: none;
+}
+html.swiss .skill-tag { border: 1px solid #101010; color: #101010; }
+html.swiss .skill-tag:hover { border-color: #e2261f; color: #e2261f; }
+
+/* Monochrome photography — color returns on hover */
+html.swiss img {
+  filter: grayscale(1) contrast(1.06);
+  transition: filter .35s ease;
+}
+html.swiss img:hover { filter: none; }
+
+/* Swiss decor — 12-column layout guides + red disc geometry */
+.theme-decor--swiss { z-index: 0; }
+.theme-swiss-grid {
+  position: absolute;
+  inset: 0 4vw;
+  background-image: linear-gradient(90deg, rgba(16,16,16,.055) 0, rgba(16,16,16,.055) 1px, transparent 1px);
+  background-size: calc(100% / 12) 100%;
+}
+.theme-swiss-baseline {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(16,16,16,.035) 1px, transparent 1px);
+  background-size: 100% 88px;
+}
+.theme-swiss-disc {
+  position: absolute;
+  top: -16vh;
+  right: -10vw;
+  width: 42vw;
+  height: 42vw;
+  border-radius: 50% !important;
+  background: #e2261f;
+  opacity: .12;
+}
+.theme-swiss-folio {
+  position: absolute;
+  left: 4vw;
+  bottom: 6vh;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .34em;
+  color: #101010;
+  opacity: .4;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   ONYX MOTION — decor: drifting nebula light + vignette
+   ============================================================ */
+.theme-decor--onyx { z-index: 0; }
+.theme-onyx-nebula {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(40% 30% at 20% 22%, rgba(124,58,237,.20), transparent 60%),
+    radial-gradient(34% 28% at 80% 68%, rgba(34,211,238,.13), transparent 60%),
+    radial-gradient(26% 22% at 62% 18%, rgba(236,72,153,.08), transparent 60%);
+  filter: blur(46px);
+  animation: onyx-drift 26s ease-in-out infinite alternate;
+}
+@keyframes onyx-drift {
+  to { transform: translate3d(4%, -3%, 0) scale(1.1); }
+}
+.theme-onyx-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0,0,0,.55));
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-onyx-nebula { animation: none; }
+}

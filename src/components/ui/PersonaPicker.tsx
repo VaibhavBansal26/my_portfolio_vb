@@ -44,7 +44,7 @@ export default function PersonaPicker() {
           transition={{ duration: .45, ease: [.22,1,.36,1] }}
           role="dialog" aria-label="Tailor this page"
           className="fixed left-1/2 -translate-x-1/2 z-[150]"
-          style={{ bottom: 24, background: "rgba(12,13,15,.92)", backdropFilter: "blur(14px)",
+          style={{ bottom: 24, background: "var(--bg)", backdropFilter: "blur(14px)",
             border: "1px solid var(--hud-line)", padding: "12px 16px",
             display: "flex", alignItems: "center", gap: 12, maxWidth: "calc(100vw - 32px)", flexWrap: "wrap" }}>
           <span className="font-mono text-[10px] tracking-[.2em] uppercase" style={{ color: "var(--reactor-dim)" }}>

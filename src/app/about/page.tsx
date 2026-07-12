@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import AboutHero from "@/components/sections/AboutHero";
 import PhotoStack from "@/components/sections/PhotoStack";
 import ExperienceSection from "@/components/sections/ExperienceSection";
-import SubwayMap from "@/components/sections/SubwayMap";
+// import SubwayMap from "@/components/sections/SubwayMap";
 import EducationSection from "@/components/sections/EducationSection";
 import FullSkillsSection from "@/components/sections/FullSkillsSection";
 import CertFlipCards from "@/components/ui/CertFlipCards";
@@ -24,10 +24,11 @@ export const metadata: Metadata = {
     "hire full stack developer United States", "hire Python developer",
     "hire React developer", "hire Node.js developer", "hire TypeScript developer",
   ],
+  alternates: { canonical: "https://www.thevaibhavbansal.com/about" },
   openGraph: {
     title: "About Vaibhav Bansal | AI Engineer — United States",
     description: "5+ years building AI systems. M.S. Data Science. Ex-Wipro · Ex-DashClicks · Research Assistant. Available across the US.",
-    url: "https://www.vaibhavbansal.in/about",
+    url: "https://www.thevaibhavbansal.com/about",
   },
 };
 
@@ -36,7 +37,7 @@ export default function AboutPage() {
     <>
       <AboutHero />
       <PhotoStack />
-      <SubwayMap />
+      {/* <SubwayMap /> */}
       <ExperienceSection />
       <EducationSection />
       <FullSkillsSection />

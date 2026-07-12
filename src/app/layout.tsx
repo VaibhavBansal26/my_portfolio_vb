@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
 import "../styles/globals.css";
 import Navbar from "@/components/sections/Navbar";
@@ -261,9 +261,8 @@ export const metadata: Metadata = {
     },
   },
 
-  verification: {
-    google: "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_CODE",
-  },
+  // Google Search Console: after registering at search.google.com/search-console,
+  // add your code here:  verification: { google: "<your-code>" }
 
   manifest: "/manifest.json",
 
@@ -279,6 +278,12 @@ export const metadata: Metadata = {
   applicationName: "Vaibhav Bansal Portfolio",
   category: "technology",
   referrer: "origin-when-cross-origin",
+};
+
+// Next 14 requires themeColor/colorScheme in the viewport export, not metadata
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   colorScheme: "dark light",
   themeColor: [
     { media: "(prefers-color-scheme: dark)",  color: "#0e0e0e" },
@@ -424,7 +429,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="dns-prefetch" href="https://github-readme-stats.vercel.app" />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          themes={["dark", "light", "studio", "arcane", "kingdoms", "ironman", "ai", "aurora", "swiss", "onyx"]}
+        >
           <BackgroundJourney />
           <Grain />
           <BootLoader />

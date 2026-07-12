@@ -19,7 +19,7 @@ export default function ResumeView() {
           {[
             personal.email,
             personal.location,
-            "vaibhavbansal.in",
+            "thevaibhavbansal.com",
             "github.com/VaibhavBansal26",
             "linkedin.com/in/vaibhavbansal-profile",
           ].map((item) => (

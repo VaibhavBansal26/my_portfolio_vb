@@ -36,7 +36,7 @@ export default function Footer() {
             className="font-display font-extrabold"
             style={{ fontSize: "clamp(2.6rem,8vw,6.5rem)", lineHeight: .98, color: "var(--text)" }}>
             let&apos;s build<br />
-            <span style={{ background: "linear-gradient(120deg,#e8a838,#f4c96a)",
+            <span style={{ background: "linear-gradient(120deg,var(--hard-accent,#e8a838),var(--hard-accent-2,#f4c96a))",
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               something
             </span>

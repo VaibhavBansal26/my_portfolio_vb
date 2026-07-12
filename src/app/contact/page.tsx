@@ -11,10 +11,11 @@ export const metadata: Metadata = {
     "hire full stack developer United States", "senior AI engineer available",
     "AI engineer open to work", "contact Vaibhav Bansal",
   ],
+  alternates: { canonical: "https://www.thevaibhavbansal.com/contact" },
   openGraph: {
     title: "Hire Vaibhav Bansal | Senior AI Engineer — United States",
     description: "Available for full-time, contract & remote roles. AI Engineer · LLMs · RAG · Python · React · AWS. Contact now.",
-    url: "https://www.vaibhavbansal.in/contact",
+    url: "https://www.thevaibhavbansal.com/contact",
   },
 };
 

@@ -7,10 +7,20 @@ function AnalyticsInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // #24 PWA — register offline shell
+  // #24 PWA — register offline shell (prod). In dev, unregister any SW left
+  // over from a past local production run and drop its caches, so stale
+  // shells never interfere with the dev server.
   useEffect(() => {
-    if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+    if (!("serviceWorker" in navigator)) return;
+    if (process.env.NODE_ENV === "production") {
       navigator.serviceWorker.register("/sw.js").catch(() => {});
+    } else {
+      navigator.serviceWorker.getRegistrations()
+        .then((regs) => regs.forEach((r) => r.unregister()))
+        .catch(() => {});
+      if ("caches" in window) {
+        caches.keys().then((keys) => keys.forEach((k) => caches.delete(k))).catch(() => {});
+      }
     }
   }, []);
 

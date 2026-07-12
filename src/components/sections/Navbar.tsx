@@ -1,12 +1,13 @@
 "use client";
 import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiOutlineSun, HiOutlineMoon, HiMenuAlt4, HiX } from "react-icons/hi";
+import { HiMenuAlt4, HiX } from "react-icons/hi";
+import { FiAperture } from "react-icons/fi";
 import { usePersona } from "@/components/ui/usePersona";
 import { setPersona, type Persona } from "@/components/ui/PersonaPicker";
+import { ATMOSPHERE_EVENT } from "@/components/ui/ThemeSwitcher";
 
 const PERSONA_CYCLE: Persona[] = ["browsing", "recruiter", "engineer"];
 const PERSONA_LABEL: Record<Persona, string> = {
@@ -24,7 +25,6 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted]   = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,8 +36,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const isDark = resolvedTheme === "dark";
-  const toggle = () => setTheme(isDark ? "light" : "dark");
   const persona = usePersona();
   const cyclePersona = () =>
     setPersona(PERSONA_CYCLE[(PERSONA_CYCLE.indexOf(persona) + 1) % PERSONA_CYCLE.length]);
@@ -50,7 +48,7 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={scrolled ? {
         paddingTop: 12, paddingBottom: 12,
-        background: "rgba(14,14,14,0.9)",
+        background: "color-mix(in srgb, var(--bg) 90%, transparent)",
         backdropFilter: "blur(16px)",
         borderBottom: "1px solid var(--border)",
         boxShadow: "0 0 20px rgba(232,168,56,0.05)",
@@ -65,7 +63,7 @@ export default function Navbar() {
           <motion.span
             animate={{ opacity: [1, 0, 1] }}
             transition={{ duration: 1.1, repeat: Infinity }}
-            style={{ display: "inline-block", width: 2, height: 22, background: "#e8a838", marginLeft: 2, verticalAlign: "middle" }}
+            style={{ display: "inline-block", width: 2, height: 22, background: "var(--hard-accent, #e8a838)", marginLeft: 2, verticalAlign: "middle" }}
           />
         </Link>
 
@@ -76,7 +74,7 @@ export default function Navbar() {
               <Link
                 href={href}
                 className="font-mono text-[11px] tracking-widest uppercase transition-colors"
-                style={{ color: pathname === href ? "#e8a838" : "var(--text-muted)", textDecoration: "none" }}
+                style={{ color: pathname === href ? "var(--hard-accent, #e8a838)" : "var(--text-muted)", textDecoration: "none" }}
               >
                 {label}
               </Link>
@@ -85,8 +83,8 @@ export default function Navbar() {
                   layoutId="nav-line"
                   style={{
                     position: "absolute", bottom: -4, left: 0, right: 0,
-                    height: 1, background: "#e8a838",
-                    boxShadow: "0 0 6px #e8a838",
+                    height: 1, background: "var(--hard-accent, #e8a838)",
+                    boxShadow: "var(--hard-glow, 0 0 6px #e8a838)",
                   }}
                 />
               )}
@@ -111,42 +109,20 @@ export default function Navbar() {
             </button>
           )}
 
-          {/* Theme toggle — only shown after mount to avoid hydration mismatch */}
+          {/* All visual worlds stay behind one compact control. */}
           {mounted && (
             <motion.button
-              onClick={toggle}
-              whileHover={{ scale: 1.15, rotate: 20 }}
-              whileTap={{ scale: 0.88 }}
-              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              onClick={() => window.dispatchEvent(new Event(ATMOSPHERE_EVENT))}
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.96 }}
+              aria-label="Choose portfolio atmosphere"
+              className="atmosphere-trigger"
               style={{
-                padding: 8, borderRadius: "50%",
-                border: "1px solid var(--border-bright)",
-                background: "transparent",
-                color: "var(--text-muted)",
-                cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                transition: "color 0.2s, border-color 0.2s",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLButtonElement).style.color = "#e8a838";
-                (e.currentTarget as HTMLButtonElement).style.borderColor = "#e8a838";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)";
-                (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border-bright)";
+                cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={isDark ? "sun" : "moon"}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0,   opacity: 1 }}
-                  exit={{   rotate:  90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {isDark ? <HiOutlineSun size={17} /> : <HiOutlineMoon size={17} />}
-                </motion.div>
-              </AnimatePresence>
+              <FiAperture size={15} />
+              <span className="hidden lg:inline">Atmosphere</span>
             </motion.button>
           )}
 
@@ -187,7 +163,7 @@ export default function Navbar() {
                   transition={{ delay: i * 0.06 }}>
                   <Link href={href} onClick={() => setMenuOpen(false)}
                     className="font-mono text-xs tracking-widest uppercase"
-                    style={{ color: pathname === href ? "#e8a838" : "var(--text-muted)", textDecoration: "none" }}>
+                    style={{ color: pathname === href ? "var(--hard-accent, #e8a838)" : "var(--text-muted)", textDecoration: "none" }}>
                     {pathname === href && <span style={{ marginRight: 8 }}>›</span>}
                     {label}
                   </Link>

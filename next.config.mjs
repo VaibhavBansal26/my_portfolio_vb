@@ -33,6 +33,21 @@ const nextConfig = {
     config.resolve.alias['@'] = path.resolve(__dirname, 'src');
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'thevaibhavbansal.com',
+          },
+        ],
+        destination: 'https://www.thevaibhavbansal.com/:path*',
+        statusCode: 301,
+      },
+    ];
+  },
   async headers() {
     return [
       {
@@ -49,13 +64,19 @@ const nextConfig = {
           },
         ],
       },
-      {
-        // Long-cache immutable static assets
-        source: '/_next/static/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+      // Long-cache immutable static assets — production only. In dev the
+      // chunk URLs are stable across rebuilds, so an immutable header makes
+      // the browser serve stale chunks forever (webpack "reading 'call'" crashes).
+      ...(process.env.NODE_ENV === 'production'
+        ? [
+            {
+              source: '/_next/static/(.*)',
+              headers: [
+                { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+              ],
+            },
+          ]
+        : []),
     ];
   },
 };

@@ -14,10 +14,11 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     title: `${project.title} — Case Study`,
     description: project.description,
     keywords: [...project.tech, project.category, "case study", "Vaibhav Bansal"],
+    alternates: { canonical: `https://www.thevaibhavbansal.com/projects/${project.id}` },
     openGraph: {
       title: `${project.title} | Vaibhav Bansal`,
       description: project.description,
-      url: `https://www.vaibhavbansal.in/projects/${project.id}`,
+      url: `https://www.thevaibhavbansal.com/projects/${project.id}`,
     },
   };
 }

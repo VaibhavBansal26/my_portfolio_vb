@@ -68,11 +68,11 @@ function Modal({ p, onClose }: { p: typeof projects[0]; onClose: () => void }) {
           </div>
           <div style={{display:"flex",gap:10,paddingTop:12,borderTop:"1px solid #1a1a1a"}}>
             {p.github&&<Link href={p.github} target="_blank" rel="noopener noreferrer"
-              style={{display:"inline-flex",alignItems:"center",gap:6,padding:"9px 18px",background:"#e8a838",color:"#0e0e0e",textDecoration:"none",fontFamily:"'JetBrains Mono',monospace",fontSize:9,fontWeight:800,letterSpacing:".1em",textTransform:"uppercase"}}>
+              style={{display:"inline-flex",alignItems:"center",gap:6,padding:"9px 18px",background:"var(--hard-accent,#e8a838)",color:"var(--hard-accent-contrast,#0e0e0e)",textDecoration:"none",fontFamily:"'JetBrains Mono',monospace",fontSize:9,fontWeight:800,letterSpacing:".1em",textTransform:"uppercase"}}>
               <FiGithub size={12}/> GitHub ↗
             </Link>}
             {(p as any).npm&&<Link href={(p as any).npm} target="_blank" rel="noopener noreferrer"
-              style={{display:"inline-flex",alignItems:"center",gap:6,padding:"9px 18px",border:"1px solid rgba(232,168,56,.4)",color:"#e8a838",textDecoration:"none",fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:".1em",textTransform:"uppercase",background:"rgba(232,168,56,.05)"}}>
+              style={{display:"inline-flex",alignItems:"center",gap:6,padding:"9px 18px",border:"1px solid var(--hard-accent-soft, rgba(232,168,56,.4))",color:"var(--hard-accent,#e8a838)",textDecoration:"none",fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:".1em",textTransform:"uppercase",background:"rgba(232,168,56,.05)"}}>
               <SiNpm size={12}/> npm
             </Link>}
           </div>
@@ -185,7 +185,7 @@ export default function FeaturedProjects() {
             <h2 className="font-display font-extrabold mt-2"
               style={{ fontSize:"clamp(2.4rem,5vw,4rem)", lineHeight:1 }}>
               featured{" "}
-              <span style={{ background:"linear-gradient(120deg,#e8a838,#f4c96a)",
+              <span style={{ background:"linear-gradient(120deg,var(--hard-accent,#e8a838),var(--hard-accent-2,#f4c96a))",
                 WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>
                 projects
               </span>

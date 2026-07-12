@@ -6,10 +6,11 @@ export const metadata: Metadata = {
   title: "Blog — AI, Software Engineering & Full Stack Development",
   description: "Technical articles by Vaibhav Bansal on AI engineering, LangChain, RAG pipelines, MLOps, React, Python, and software architecture.",
   keywords: ["AI engineering blog","LangChain tutorial","RAG guide","MLOps","software engineering articles","Python tutorials","React Next.js"],
+  alternates: { canonical: "https://www.thevaibhavbansal.com/blog" },
   openGraph: {
     title: "Blog | Vaibhav Bansal",
     description: "Technical writing on AI, ML, LangChain, RAG, and full-stack software engineering.",
-    url: "https://www.vaibhavbansal.in/blog",
+    url: "https://www.thevaibhavbansal.com/blog",
   },
 };
 

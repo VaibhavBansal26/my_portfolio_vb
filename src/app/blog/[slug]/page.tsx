@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: post.title,
     description: post.description,
     keywords: post.tags,
+    alternates: { canonical: `https://www.thevaibhavbansal.com/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       publishedTime: post.date,
       authors: ["Vaibhav Bansal"],
       tags: post.tags,
+      url: `https://www.thevaibhavbansal.com/blog/${post.slug}`,
     },
   };
 }
