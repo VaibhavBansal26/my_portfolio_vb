@@ -1,8 +1,44 @@
 {
+  "components/sections/OnyxHome.tsx -> @/components/sections/TimesSquareSection": {
+    "id": 2919,
+    "files": [
+      "static/chunks/919.d7ec849a5f41f1ba.js"
+    ]
+  },
   "components/sections/SkillsPreview.tsx -> @/components/three/SkillSphere": {
     "id": 6404,
     "files": [
       "static/chunks/180.5af9ce9b6573a0bd.js"
+    ]
+  },
+  "components/ui/ThemeHomeGate.tsx -> @/components/sections/InlineMiniGame": {
+    "id": 3558,
+    "files": [
+      "static/chunks/558.f8d1c8877493ca45.js"
+    ]
+  },
+  "components/ui/ThemeHomeGate.tsx -> @/components/sections/NpmPackageSection": {
+    "id": 4994,
+    "files": [
+      "static/chunks/994.19c92379d88165f3.js"
+    ]
+  },
+  "components/ui/ThemeHomeGate.tsx -> @/components/sections/ResearchSection": {
+    "id": 7941,
+    "files": [
+      "static/chunks/941.843d94e64d1d4162.js"
+    ]
+  },
+  "components/ui/ThemeHomeGate.tsx -> @/components/sections/SkillsPreview": {
+    "id": 2535,
+    "files": [
+      "static/chunks/535.4f8f4c1199b3f8d2.js"
+    ]
+  },
+  "components/ui/ThemeHomeGate.tsx -> @/components/sections/TimesSquareSection": {
+    "id": 2919,
+    "files": [
+      "static/chunks/919.d7ec849a5f41f1ba.js"
     ]
   }
 }
