@@ -6,13 +6,13 @@
   "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/api/presence/route": "app/api/presence/route.js",
   "/about/page": "app/about/page.js",
-  "/blog/page": "app/blog/page.js",
   "/blog/[slug]/page": "app/blog/[slug]/page.js",
-  "/contact/page": "app/contact/page.js",
   "/api/github-stats/route": "app/api/github-stats/route.js",
+  "/blog/page": "app/blog/page.js",
+  "/contact/page": "app/contact/page.js",
   "/portfolio/page": "app/portfolio/page.js",
-  "/projects/[id]/page": "app/projects/[id]/page.js",
   "/resume/page": "app/resume/page.js",
   "/terminal/page": "app/terminal/page.js",
+  "/projects/[id]/page": "app/projects/[id]/page.js",
   "/showcase/page": "app/showcase/page.js"
 }
