@@ -314,7 +314,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 },
                 sameAs: [
                   "https://github.com/VaibhavBansal26",
-                  "https://www.linkedin.com/in/vaibhavbansal-profile",
+                  "https://www.linkedin.com/in/vaibhavb-26m",
                   "https://leetcode.com/vaibhav_bansal26",
                   "https://orcid.org/0000-0002-5433-0385",
                   "https://www.youtube.com/@VaibhavBansalCode",

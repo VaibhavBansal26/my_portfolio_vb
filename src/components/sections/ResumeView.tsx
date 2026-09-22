@@ -21,7 +21,7 @@ export default function ResumeView() {
             personal.location,
             "thevaibhavbansal.com",
             "github.com/VaibhavBansal26",
-            "linkedin.com/in/vaibhavbansal-profile",
+            "linkedin.com/in/vaibhavb-26m",
           ].map((item) => (
             <span key={item} className="font-mono text-xs text-[var(--text-muted)]">
               {item}

@@ -8,7 +8,7 @@ export const personal = {
   location: "United States",
   email: "vaibhav.bansal164@gmail.com",
   website: "https://www.thevaibhavbansal.com",
-  github: "https://github.com/vaibhavbansal164",
+  github: "https://github.com/VaibhavBansal26",
   linkedin: "https://www.linkedin.com/in/vaibhavb-26m/",
   leetcode: "https://www.leetcode.com/vaibhav_bansal26",
   medium: "https://www.medium.com/@vaibhav.bansal945",
